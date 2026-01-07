@@ -1,0 +1,119 @@
+/* ================================
+   AP Food Consulting – Base Styles
+================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap");
+
+:root {
+  --c-ink: #1b1b1b;
+  --c-ink-soft: #333333;
+  --c-paper: #f4f4f2;
+  --c-paper-alt: #ffffff;
+  --c-accent: #8f6f4e;
+  --c-accent-hover: #7a5e41;
+  --c-border: #e2e2e2;
+  --c-muted: #7a7a7a;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --container: 1100px;
+}
+
+/* Reset ligero */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--c-paper);
+  color: var(--c-ink);
+  line-height: 1.6;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.4rem;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--c-ink-soft);
+}
+
+.muted {
+  color: var(--c-muted);
+  font-size: 0.95rem;
+}
+
+/* Layout */
+.container {
+  max-width: var(--container);
+  padding: 0 1.25rem;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--c-ink);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #000;
+}
+
+.btn-outline {
+  border-color: var(--c-ink);
+  color: var(--c-ink);
+}
+
+.btn-outline:hover {
+  background: var(--c-ink);
+  color: #fff;
+}
+
+/* Links */
+a {
+  color: var(--c-ink);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--c-accent);
+}
