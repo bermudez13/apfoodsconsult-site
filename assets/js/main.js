@@ -1,57 +1,40 @@
 // File: /assets/js/main.js
+// AP Food Consulting - main.js (EN/ES + hero + header + mobile nav + contact form)
 
 (function () {
   // Footer year
   var yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 })();
 
-/* Mobile nav toggle */
+/* Mobile nav toggle (works if you have .nav-toggle + #primaryNav + .site-header.nav-open CSS) */
 (function () {
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("primaryNav");
   var header = document.querySelector(".site-header");
-
   if (!toggle || !nav || !header) return;
 
   function setOpen(isOpen) {
     header.classList.toggle("nav-open", isOpen);
     toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
-    if (isOpen) {
-      // Move focus to first nav link for keyboard users
-      var firstLink = nav.querySelector("a");
-      if (firstLink) firstLink.focus();
-    } else {
-      toggle.focus();
-    }
   }
 
   toggle.addEventListener("click", function () {
-    var isOpen = header.classList.contains("nav-open");
-    setOpen(!isOpen);
+    setOpen(!header.classList.contains("nav-open"));
   });
 
-  // Close when clicking a link
   nav.addEventListener("click", function (e) {
-    var target = e.target;
-    if (target && target.tagName === "A" && header.classList.contains("nav-open")) {
-      setOpen(false);
-    }
+    var t = e.target;
+    if (t && t.tagName === "A" && header.classList.contains("nav-open")) setOpen(false);
   });
 
-  // Close on Escape
   window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && header.classList.contains("nav-open")) {
-      setOpen(false);
-    }
+    if (e.key === "Escape" && header.classList.contains("nav-open")) setOpen(false);
   });
 
-  // Close on resize back to desktop
   window.addEventListener("resize", function () {
-    if (window.innerWidth > 980 && header.classList.contains("nav-open")) {
-      setOpen(false);
-    }
+    if (window.innerWidth > 980 && header.classList.contains("nav-open")) setOpen(false);
   });
 })();
 
@@ -97,14 +80,12 @@
       var desired = isMobile ? (mobile || desktop) : (desktop || img.getAttribute("src"));
       if (!desired) return;
 
-      if (img.getAttribute("src") !== desired) {
-        img.setAttribute("src", desired);
-      }
+      if (img.getAttribute("src") !== desired) img.setAttribute("src", desired);
     });
   }
 
   if (mq.addEventListener) mq.addEventListener("change", applySources);
-  else mq.addListener(applySources);
+  else mq.addListener(applySources); // Safari fallback
 
   applySources();
 })();
@@ -141,7 +122,6 @@
       else img.classList.remove("active");
     });
     index = 0;
-
     preload(getSrc(images[1]));
   }
 
@@ -181,113 +161,203 @@
       },
       { threshold: 0.12 }
     );
-
     io.observe(hero);
   } else {
     start();
   }
 })();
 
-// Contact form async submit (Turnstile + honeypot + hardened)
+/* Contact form (AJAX + i18n + Turnstile + honeypot + timeout + robust errors) */
 (function () {
   var form = document.getElementById("contactForm");
-  var statusEl = document.getElementById("formStatus");
   if (!form) return;
 
-  function setStatus(msg, isError) {
+  var submitBtn = form.querySelector('button[type="submit"]');
+  var statusEl = document.getElementById("formStatus");
+
+  function getLocale() {
+    var hidden = form.querySelector('input[name="locale"]');
+    var v = hidden ? String(hidden.value || "").toLowerCase() : "";
+    if (v === "es" || v === "en") return v;
+
+    var lang = (document.documentElement.lang || "").toLowerCase();
+    if (lang.startsWith("es")) return "es";
+    if (lang.startsWith("en")) return "en";
+
+    if (window.location.pathname.startsWith("/es/")) return "es";
+    return "en";
+  }
+
+  var locale = getLocale();
+  var t = {
+    en: {
+      sending: "Sending…",
+      sent: "Message sent. We’ll reply within 1–2 business days.",
+      error: "Could not send. Please try again in a few minutes.",
+      network: "Network error. Please check your connection and try again.",
+      timeout: "Request timed out. Please try again.",
+      rateLimit: "Too many attempts. Please wait an hour and try again.",
+      turnstile: "Please complete the security check and try again.",
+      invalid: "Please check required fields (name, email, and message).",
+      invalidEmail: "Email doesn't look valid.",
+      fallbackEmail: "Something went wrong. Please email info@apfoodconsulting.com.",
+    },
+    es: {
+      sending: "Enviando…",
+      sent: "Listo. Mensaje enviado. Te responderemos en 1–2 días laborables.",
+      error: "No se pudo enviar. Intenta de nuevo en unos minutos.",
+      network: "Error de red. Revisa tu conexión e intenta de nuevo.",
+      timeout: "La solicitud tardó demasiado. Intenta de nuevo.",
+      rateLimit: "Demasiados intentos. Espera una hora e inténtalo de nuevo.",
+      turnstile: "Completa la verificación de seguridad e inténtalo otra vez.",
+      invalid: "Revisa los campos requeridos (nombre, email y mensaje).",
+      invalidEmail: "El email no parece válido.",
+      fallbackEmail: "Ocurrió un error. Escríbenos a info@apfoodconsulting.com.",
+    },
+  }[locale];
+
+  function setStatus(message, kind) {
     if (!statusEl) return;
-    statusEl.textContent = msg;
-    statusEl.style.color = isError ? "rgba(255, 130, 130, 0.9)" : "";
+    statusEl.textContent = message || "";
+    statusEl.classList.remove("is-success", "is-error");
+    if (kind === "success") statusEl.classList.add("is-success");
+    if (kind === "error") statusEl.classList.add("is-error");
   }
 
-  function setBusy(isBusy) {
-    form.setAttribute("aria-busy", isBusy ? "true" : "false");
-    var submitBtn = form.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = !!isBusy;
+  function setLoading(loading) {
+    if (!submitBtn) return;
+    submitBtn.disabled = !!loading;
+    submitBtn.dataset.originalText = submitBtn.dataset.originalText || submitBtn.textContent;
+    submitBtn.textContent = loading ? t.sending : submitBtn.dataset.originalText;
   }
 
-  function resetTurnstile() {
-    // Turnstile exposes window.turnstile when loaded
+  function isValidEmail(email) {
+    var v = String(email || "").trim();
+    if (!v) return false;
+    if (v.length > 254) return false;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  function resetTurnstileIfPresent() {
     if (window.turnstile && typeof window.turnstile.reset === "function") {
-      try {
-        window.turnstile.reset();
-      } catch (_) {}
+      try { window.turnstile.reset(); } catch (_) {}
     }
   }
 
-  var inflight = false;
+  var inFlight = false;
 
-  form.addEventListener("submit", async function (e) {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (inflight) return;
+    if (inFlight) return;
 
-    // Basic required checks (since novalidate is set)
-    var name = form.querySelector("#name");
-    var email = form.querySelector("#email");
-    var message = form.querySelector("#message");
+    setStatus("", null);
 
-    if (!name || !name.value.trim()) {
-      setStatus("Please enter your name.", true);
-      name && name.focus();
+    var nameEl = form.querySelector('input[name="name"]');
+    var emailEl = form.querySelector('input[name="email"]');
+    var messageEl = form.querySelector('textarea[name="message"]');
+
+    var name = nameEl ? String(nameEl.value || "").trim() : "";
+    var email = emailEl ? String(emailEl.value || "").trim() : "";
+    var message = messageEl ? String(messageEl.value || "").trim() : "";
+
+    if (!name || !email || !message) {
+      setStatus(t.invalid, "error");
       return;
     }
-    if (!email || !email.value.trim()) {
-      setStatus("Please enter your email.", true);
-      email && email.focus();
-      return;
-    }
-    if (!message || !message.value.trim()) {
-      setStatus("Please enter a brief message.", true);
-      message && message.focus();
+    if (!isValidEmail(email)) {
+      setStatus(t.invalidEmail, "error");
       return;
     }
 
-    // Honeypot: if filled, pretend success (don’t confirm spam)
+    // Honeypot: name="company" (must be empty)
     var hp = form.querySelector('input[name="company"]');
-    if (hp && hp.value && hp.value.trim().length > 0) {
+    if (hp && String(hp.value || "").trim()) {
+      // Silently accept
       form.reset();
-      setStatus("Message sent. We’ll reply within 1–2 business days.", false);
-      resetTurnstile();
+      setStatus(t.sent, "success");
+      resetTurnstileIfPresent();
       return;
     }
 
     // Turnstile token is posted as "cf-turnstile-response"
-    var tokenEl = form.querySelector('input[name="cf-turnstile-response"]');
-    var token = tokenEl ? tokenEl.value : "";
-    if (!token) {
-      setStatus("Please complete the security check and try again.", true);
+    var ts =
+      (form.querySelector('input[name="cf-turnstile-response"]') || {}).value || "";
+    ts = String(ts || "").trim();
+    if (!ts) {
+      setStatus(t.turnstile, "error");
       return;
     }
 
-    inflight = true;
-    setBusy(true);
-    setStatus("Sending…", false);
+    inFlight = true;
+    setLoading(true);
 
-    try {
-      var formData = new FormData(form);
+    var controller = new AbortController();
+    var timeoutId = window.setTimeout(function () {
+      try { controller.abort(); } catch (_) {}
+    }, 15000);
 
-      var res = await fetch(form.getAttribute("action") || "/api/contact", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
+    (async function () {
+      try {
+        var formData = new FormData(form);
 
-      if (!res.ok) {
-        resetTurnstile();
-        setStatus("Something went wrong. Please email info@apfoodconsulting.com.", true);
-        return;
+        var res = await fetch(form.getAttribute("action") || "/api/contact", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
+
+        var raw = await res.text();
+        var data = {};
+        try { data = raw ? JSON.parse(raw) : {}; } catch (_) { data = {}; }
+
+        if (res.ok && data && data.ok) {
+          setStatus(t.sent, "success");
+          form.reset();
+          resetTurnstileIfPresent();
+          return;
+        }
+
+        // Rate limit
+        if (res.status === 429 || data.code === "RATE_LIMIT") {
+          setStatus(t.rateLimit, "error");
+          return;
+        }
+
+        // Turnstile issues
+        var isTurnstile =
+          data.code === "TURNSTILE_REQUIRED" ||
+          data.code === "TURNSTILE_FAILED" ||
+          res.status === 403;
+
+        if (isTurnstile) {
+          resetTurnstileIfPresent();
+          setStatus(t.turnstile, "error");
+          return;
+        }
+
+        // Missing/invalid fields
+        if (data.code === "MISSING_FIELDS") {
+          setStatus(t.invalid, "error");
+          return;
+        }
+        if (data.code === "INVALID_EMAIL") {
+          setStatus(t.invalidEmail, "error");
+          return;
+        }
+
+        // Generic fallback (prefer server error if present)
+        setStatus(data.error || t.fallbackEmail, "error");
+        resetTurnstileIfPresent();
+      } catch (err) {
+        if (err && err.name === "AbortError") setStatus(t.timeout, "error");
+        else setStatus(t.network, "error");
+        resetTurnstileIfPresent();
+      } finally {
+        window.clearTimeout(timeoutId);
+        setLoading(false);
+        inFlight = false;
       }
-
-      setStatus("Message sent. We’ll reply within 1–2 business days.", false);
-      form.reset();
-      resetTurnstile();
-    } catch (err) {
-      resetTurnstile();
-      setStatus("Network error. Please email info@apfoodconsulting.com.", true);
-    } finally {
-      inflight = false;
-      setBusy(false);
-    }
+    })();
   });
 })();
-
