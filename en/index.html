@@ -13,6 +13,8 @@
     <!-- Pre-launch (keep if you're still blocking indexing) -->
     <!-- <meta name="robots" content="noindex, nofollow" /> -->
 
+    <meta name="theme-color" content="#0f1113" />
+
     <link rel="canonical" href="https://apfoodconsulting.com/en/" />
     <link
       rel="alternate"
@@ -30,7 +32,6 @@
       href="https://apfoodconsulting.com/en/"
     />
 
-    <!-- Open Graph -->
     <meta property="og:title" content="AP Food Consulting" />
     <meta
       property="og:description"
@@ -38,7 +39,6 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://apfoodconsulting.com/en/" />
-    <!-- Optional: replace with your real OG image -->
     <meta
       property="og:image"
       content="https://apfoodconsulting.com/assets/img/og-image.jpg"
@@ -46,154 +46,132 @@
 
     <link rel="icon" href="/assets/img/logo.png" />
     <link rel="stylesheet" href="/assets/css/styles.css" />
-
     <script defer src="/assets/js/main.js"></script>
+    <script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+></script>
+
   </head>
 
   <body>
-    <!-- Minimal header (reduced distractions) -->
-    <header class="section" style="padding: 1.25rem 0">
-      <div
-        class="container"
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 1rem;
-        "
-      >
-        <a
-          href="/en/"
-          style="
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-          "
-        >
-          <!-- Optional: swap to your logo asset -->
-          <!-- <img src="/assets/img/logo.png" alt="AP Food Consulting" height="34" /> -->
-          <strong style="letter-spacing: 0.02em">AP Food Consulting</strong>
-        </a>
+    <body>
 
-        <nav
-          aria-label="Primary"
-          style="
-            display: flex;
-            align-items: center;
-            gap: 0.9rem;
-            flex-wrap: wrap;
-          "
-        >
-          <a href="#services" style="text-decoration: none">Services</a>
-          <a href="#process" style="text-decoration: none">Process</a>
-          <a
-            href="#contact"
-            class="btn btn-outline"
-            style="text-decoration: none; padding: 0.55rem 1rem"
-            >Contact</a
-          >
-          <a
-            href="/es/"
-            class="btn btn-primary"
-            style="text-decoration: none; padding: 0.55rem 0.9rem"
-            >ES</a
-          >
-        </nav>
-      </div>
-    </header>
+    <header class="site-header">
+  <div class="container site-header__row">
+    <a class="brand" href="/en/" aria-label="AP Food Consulting Home">
+      <strong class="brand__name">AP Food Consulting</strong>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="primaryNav"
+    >
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="primaryNav" class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#case-studies">Case Studies</a>
+      <a href="#contact" class="btn btn-outline btn--sm">Contact</a>
+      <a href="/es/" class="btn btn-primary btn--sm">ES</a>
+    </nav>
+  </div>
+</header>
+
 
     <main>
       <!-- HERO -->
-      <section class="section" style="padding-top: 2rem">
-        <div
-          class="container"
-          style="
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 2rem;
-            align-items: center;
-          "
-        >
-          <div>
-            <p class="muted" style="margin-bottom: 0.5rem">
-              Restaurant & Culinary Consulting
+      <section class="hero-full hero" aria-label="Hero">
+        <div class="hero-full__media" aria-hidden="true">
+          <img
+            class="hero-img active"
+            src="/assets/img/hero/hero-food-01.jpg"
+            data-desktop="/assets/img/hero/hero-food-01.jpg"
+            data-mobile="/assets/img/hero/hero-food-01-m.jpg"
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+          <img
+            class="hero-img"
+            src="/assets/img/hero/hero-food-02.jpg"
+            data-desktop="/assets/img/hero/hero-food-02.jpg"
+            data-mobile="/assets/img/hero/hero-food-02-m.jpg"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="hero-img"
+            src="/assets/img/hero/hero-food-03.jpg"
+            data-desktop="/assets/img/hero/hero-food-03.jpg"
+            data-mobile="/assets/img/hero/hero-food-03-m.jpg"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div class="hero-full__overlay" aria-hidden="true"></div>
+
+        <div class="container hero-full__content">
+          <div class="hero-full__text">
+            <p class="muted">Restaurant &amp; Culinary Consulting</p>
+
+            <h1>
+              Culinary &amp; Restaurant Consulting for Profitable Operations
+            </h1>
+
+            <p>
+              <strong
+                >Build it right. Run it profitably. Scale it with
+                confidence.</strong
+              ><br />
+              Strategic culinary and operational consulting for restaurant
+              openings, cost control, and high-performance BOH/FOH systems
+              across Miami, NYC, and LATAM markets.
             </p>
 
-            <h1>Build it right. Run it profitably. Scale with confidence.</h1>
-
-            <p style="max-width: 56ch">
-              Practical consulting for restaurant owners and operators: menu
-              strategy, cost control, kitchen systems, service standards, and
-              launch support.
-            </p>
-
-            <div
-              style="
-                display: flex;
-                gap: 0.75rem;
-                flex-wrap: wrap;
-                margin-top: 1.25rem;
-              "
-            >
-              <a
-                class="btn btn-primary"
-                href="#contact"
-                style="text-decoration: none"
+            <div class="btn-row">
+              <a class="btn btn-primary" href="#contact"
                 >Request a Consultation</a
               >
-              <a
-                class="btn btn-outline"
-                href="#services"
-                style="text-decoration: none"
-                >Explore Services</a
-              >
+              <a class="btn btn-outline" href="#services">Explore Services</a>
             </div>
 
-            <p class="muted" style="margin-top: 1rem">
+            <aside class="surface focus-box" aria-label="Highlights">
+              <h3>Focus Areas</h3>
+              <ul>
+                <li>Restaurant openings &amp; launch execution</li>
+                <li>Food &amp; labor cost control</li>
+                <li>BOH/FOH SOP systems + training</li>
+                <li>Operational structure &amp; accountability</li>
+              </ul>
+            </aside>
+
+            <p class="muted">
               Based in Miami • Available for US / LATAM • On-site or remote
             </p>
-          </div>
-
-          <!-- Simple visual block (replace with photo later) -->
-          <div
-            aria-hidden="true"
-            style="
-              border: 1px solid var(--c-border);
-              border-radius: var(--radius-lg);
-              background: var(--c-paper-alt);
-              min-height: 320px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 1rem;
-              text-align: center;
-            "
-          >
-            <div>
-              <p class="muted" style="margin: 0">Optional hero photo</p>
-              <p class="muted" style="margin: 0">/assets/img/hero/...</p>
-            </div>
           </div>
         </div>
       </section>
 
       <!-- TRUST / PROOF STRIP -->
-      <section class="section" style="padding: 2rem 0">
+      <section class="section trust">
         <div class="container">
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(4, minmax(0, 1fr));
-              gap: 1rem;
-              border-top: 1px solid var(--c-border);
-              border-bottom: 1px solid var(--c-border);
-              padding: 1.25rem 0;
-            "
-          >
+          <div class="trust__grid">
             <div>
               <strong>Profit-first</strong>
-              <div class="muted">Systems & numbers</div>
+              <div class="muted">Systems &amp; numbers</div>
             </div>
             <div>
               <strong>Operator-ready</strong>
@@ -215,103 +193,61 @@
       <section id="services" class="section">
         <div class="container">
           <h2>Services</h2>
-          <p class="muted" style="max-width: 70ch">
-            Choose a focused engagement or a full operational rebuild. We keep
-            it simple: diagnose, prioritize, execute.
+          <p>
+            Execution-driven support for openings, operational structure, and
+            financial performance—built to protect investment and improve
+            results.
           </p>
 
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(3, minmax(0, 1fr));
-              gap: 1rem;
-              margin-top: 1.5rem;
-            "
-          >
-            <article
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-              "
-            >
-              <h3 style="margin-bottom: 0.35rem">Menu & Concept</h3>
-              <p class="muted" style="margin: 0">
-                Positioning, menu structure, engineering, pricing strategy, and
-                signature offerings.
+          <div class="grid grid-3" style="margin-top: 1.5rem">
+            <article class="card">
+              <h3>Restaurant Opening Support</h3>
+              <p>
+                From concept to launch: menu structure, kitchen setup, staffing,
+                training, and opening execution.
               </p>
+              <a class="btn btn-outline" href="#contact">Plan Your Opening</a>
             </article>
 
-            <article
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-              "
-            >
-              <h3 style="margin-bottom: 0.35rem">Cost Control</h3>
-              <p class="muted" style="margin: 0">
-                Food cost targets, purchasing, inventory, recipe costing, and
-                waste reduction.
+            <article class="card">
+              <h3>Operational &amp; Financial Turnaround</h3>
+              <p>
+                When costs are high: food &amp; labor control, menu
+                optimization, systems, and leadership accountability.
               </p>
+              <a class="btn btn-outline" href="#contact">Fix My Operations</a>
             </article>
 
-            <article
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-              "
-            >
-              <h3 style="margin-bottom: 0.35rem">Operations & Systems</h3>
-              <p class="muted" style="margin: 0">
-                SOPs, station setup, prep systems, staffing guidance, and
-                service standards.
+            <article class="card">
+              <h3>Ongoing Operational Advisory</h3>
+              <p>
+                Consistent guidance without a full-time executive hire:
+                performance review and operational adjustments.
               </p>
+              <a class="btn btn-outline" href="#contact"
+                >Request Ongoing Support</a
+              >
             </article>
 
-            <article
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-              "
-            >
-              <h3 style="margin-bottom: 0.35rem">Openings & Turnarounds</h3>
-              <p class="muted" style="margin: 0">
-                From pre-opening plans to stabilization, training, and launch
-                execution.
+            <article class="card">
+              <h3>Emergency Stabilization</h3>
+              <p>
+                Rapid intervention for urgent situations: cost reset, labor
+                alignment, waste control, and recovery plan.
               </p>
+              <a class="btn btn-outline" href="#contact">Get Immediate Help</a>
             </article>
 
-            <article
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-              "
-            >
-              <h3 style="margin-bottom: 0.35rem">Training</h3>
+            <article class="card">
+              <h3>Training</h3>
               <p class="muted" style="margin: 0">
                 BOH/FOH training plans, tastings, quality checks, and leadership
                 coaching.
               </p>
             </article>
 
-            <article
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-              "
-            >
-              <h3 style="margin-bottom: 0.35rem">Audit & Roadmap</h3>
+            <article class="card">
+              <h3>Audit &amp; Roadmap</h3>
               <p class="muted" style="margin: 0">
                 A fast diagnostic with prioritized fixes and a 30–60–90 day
                 plan.
@@ -319,12 +255,8 @@
             </article>
           </div>
 
-          <!-- Mid-page CTA (repeat CTA on longer pages) -->
           <div style="margin-top: 1.5rem">
-            <a
-              class="btn btn-primary"
-              href="#contact"
-              style="text-decoration: none"
+            <a class="btn btn-primary" href="#contact"
               >Request a Consultation</a
             >
           </div>
@@ -332,15 +264,7 @@
       </section>
 
       <!-- PROCESS -->
-      <section
-        id="process"
-        class="section"
-        style="
-          background: var(--c-paper-alt);
-          border-top: 1px solid var(--c-border);
-          border-bottom: 1px solid var(--c-border);
-        "
-      >
+      <section id="process" class="section section-alt">
         <div class="container">
           <h2>Process</h2>
           <p class="muted" style="max-width: 70ch">
@@ -381,100 +305,179 @@
         </div>
       </section>
 
-      <!-- SOCIAL PROOF -->
-      <section class="section">
+      <!-- ABOUT -->
+      <section id="about" class="section">
+        <div class="container grid about-grid">
+          <div>
+            <img
+              src="/assets/img/chef-alejandro-dark.jpeg"
+              alt="Chef Alejandro Porben portrait"
+              class="surface"
+              style="border-radius: var(--radius-lg)"
+            />
+          </div>
+
+          <div>
+            <h2>About Chef Alejandro Porben</h2>
+            <p>
+              Chef Alejandro Porben is a Cuban chef with
+              <strong>14+ years of experience</strong> and multiple successful
+              restaurant openings. He has helped operate and elevate
+              high-performing concepts including
+              <strong>Soho House, Amalfi Llama, Sparrow, Scarpetta</strong>, and
+              others.
+            </p>
+            <p>
+              With a background across
+              <strong
+                >Spanish, Italian, French, Mediterranean, Japanese, Latin
+                Caribbean, and healthy cuisine</strong
+              >, Alejandro’s consulting is built on disciplined
+              execution—improving restaurant performance through
+              <strong
+                >financial structure, BOH/FOH SOPs, training systems, and
+                leadership accountability</strong
+              >.
+            </p>
+            <p>
+              Over the last <strong>4 years</strong>, consulting evolved from
+              side work into a focused practice after consistently improving
+              operations and impacting profitability through systems that teams
+              can actually follow.
+            </p>
+
+            <div class="tags" aria-label="Core specialties">
+              <span class="tag">Openings &amp; Launch Support</span>
+              <span class="tag">BOH/FOH SOP Systems</span>
+              <span class="tag">Food &amp; Labor Cost Control</span>
+              <span class="tag">Menu Engineering</span>
+              <span class="tag">Training &amp; Accountability</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CASE STUDIES -->
+      <section id="case-studies" class="section">
         <div class="container">
-          <h2>Results & Proof</h2>
+          <h2>Case Studies</h2>
           <p class="muted" style="max-width: 70ch">
-            Add testimonials, logos, or short case notes once available (even
-            2–3 helps trust).
+            Results are business-dependent. When needed, projects can remain
+            confidential while still showing the process and outcomes.
           </p>
 
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(3, minmax(0, 1fr));
-              gap: 1rem;
-              margin-top: 1.5rem;
-            "
-          >
-            <figure
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-                margin: 0;
-              "
-            >
-              <blockquote style="margin: 0; color: var(--c-ink-soft)">
-                “Placeholder testimonial about improvements in consistency and
-                food cost.”
-              </blockquote>
-              <figcaption class="muted" style="margin-top: 0.75rem">
-                — Client Name, Restaurant
-              </figcaption>
-            </figure>
+          <div class="grid grid-3" style="margin-top: 1.25rem">
+            <article class="card card--lg">
+              <div class="muted card__kicker">
+                Project Type · Operational Turnaround
+              </div>
+              <h3 style="margin: 0.6rem 0 0.5rem">
+                High Food Cost + Inconsistent Execution
+              </h3>
 
-            <figure
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-                margin: 0;
-              "
-            >
-              <blockquote style="margin: 0; color: var(--c-ink-soft)">
-                “Placeholder testimonial about smoother service and better guest
-                experience.”
-              </blockquote>
-              <figcaption class="muted" style="margin-top: 0.75rem">
-                — Client Name, Restaurant
-              </figcaption>
-            </figure>
+              <p class="muted card__kicker" style="margin-top: 0.6rem">
+                Challenge
+              </p>
+              <p style="margin-top: 0">
+                Food cost above target, overproduction, and inconsistent BOH
+                execution impacting guest experience and margins.
+              </p>
 
-            <figure
-              style="
-                border: 1px solid var(--c-border);
-                border-radius: var(--radius-md);
-                background: var(--c-paper-alt);
-                padding: 1.25rem;
-                margin: 0;
-              "
-            >
-              <blockquote style="margin: 0; color: var(--c-ink-soft)">
-                “Placeholder testimonial about a stronger opening plan and
-                training.”
-              </blockquote>
-              <figcaption class="muted" style="margin-top: 0.75rem">
-                — Client Name, Restaurant
-              </figcaption>
-            </figure>
+              <p class="muted card__kicker" style="margin-top: 0.9rem">
+                Action
+              </p>
+              <ul style="margin: 0; padding-left: 1.1rem">
+                <li>Menu engineering + recipe costing structure</li>
+                <li>Prep systems, pars, and ordering controls</li>
+                <li>Station standards + leadership accountability tools</li>
+              </ul>
+
+              <p class="muted card__kicker" style="margin-top: 0.9rem">
+                Outcome
+              </p>
+              <p style="margin: 0">
+                Improved cost visibility, reduced waste, and consistent BOH
+                execution with management tracking.
+              </p>
+            </article>
+
+            <article class="card card--lg">
+              <div class="muted card__kicker">
+                Project Type · Restaurant Opening
+              </div>
+              <h3 style="margin: 0.6rem 0 0.5rem">
+                Pre-Opening Systems + Launch Execution
+              </h3>
+
+              <p class="muted card__kicker" style="margin-top: 0.6rem">
+                Challenge
+              </p>
+              <p style="margin-top: 0">
+                New concept required structure, staffing plan, training systems,
+                and opening execution to protect timeline and budget.
+              </p>
+
+              <p class="muted card__kicker" style="margin-top: 0.9rem">
+                Action
+              </p>
+              <ul style="margin: 0; padding-left: 1.1rem">
+                <li>Menu structure aligned to profitability targets</li>
+                <li>BOH/FOH SOPs + training checklist</li>
+                <li>Vendor setup + purchasing workflow</li>
+              </ul>
+
+              <p class="muted card__kicker" style="margin-top: 0.9rem">
+                Outcome
+              </p>
+              <p style="margin: 0">
+                Organized launch, trained team, and operational readiness built
+                for consistency from day one.
+              </p>
+            </article>
+
+            <article class="card card--lg">
+              <div class="muted card__kicker">
+                Project Type · Standardization
+              </div>
+              <h3 style="margin: 0.6rem 0 0.5rem">
+                Scaling Systems for Consistency
+              </h3>
+
+              <p class="muted card__kicker" style="margin-top: 0.6rem">
+                Challenge
+              </p>
+              <p style="margin-top: 0">
+                Operational inconsistency required standardized SOPs, training,
+                and performance controls to maintain quality.
+              </p>
+
+              <p class="muted card__kicker" style="margin-top: 0.9rem">
+                Action
+              </p>
+              <ul style="margin: 0; padding-left: 1.1rem">
+                <li>BOH/FOH SOP standardization</li>
+                <li>Production planning aligned to sales volume</li>
+                <li>Management tools + weekly KPI rhythm</li>
+              </ul>
+
+              <p class="muted card__kicker" style="margin-top: 0.9rem">
+                Outcome
+              </p>
+              <p style="margin: 0">
+                Repeatable systems that improve execution consistency and
+                strengthen operational control.
+              </p>
+            </article>
           </div>
         </div>
       </section>
 
       <!-- FAQ -->
-      <section
-        class="section"
-        style="
-          background: var(--c-paper-alt);
-          border-top: 1px solid var(--c-border);
-        "
-      >
+      <section class="section section-alt">
         <div class="container">
           <h2>FAQ</h2>
 
-          <details
-            style="
-              border: 1px solid var(--c-border);
-              border-radius: var(--radius-md);
-              padding: 1rem;
-              background: #fff;
-              margin-top: 1rem;
-            "
-          >
+          <details>
             <summary>
               <strong
                 >Do you work with new openings or existing restaurants?</strong
@@ -486,15 +489,7 @@
             </p>
           </details>
 
-          <details
-            style="
-              border: 1px solid var(--c-border);
-              border-radius: var(--radius-md);
-              padding: 1rem;
-              background: #fff;
-              margin-top: 0.75rem;
-            "
-          >
+          <details>
             <summary><strong>How fast can we see impact?</strong></summary>
             <p class="muted" style="margin-top: 0.75rem">
               Typically within weeks once the highest-leverage fixes are
@@ -503,15 +498,7 @@
             </p>
           </details>
 
-          <details
-            style="
-              border: 1px solid var(--c-border);
-              border-radius: var(--radius-md);
-              padding: 1rem;
-              background: #fff;
-              margin-top: 0.75rem;
-            "
-          >
+          <details>
             <summary><strong>Is this remote-only?</strong></summary>
             <p class="muted" style="margin-top: 0.75rem">
               Remote is available, but on-site audits are recommended when
@@ -523,15 +510,7 @@
 
       <!-- CONTACT -->
       <section id="contact" class="section">
-        <div
-          class="container"
-          style="
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
-          "
-        >
+        <div class="container grid contact-grid">
           <div>
             <h2>Contact</h2>
             <p class="muted" style="max-width: 60ch">
@@ -550,178 +529,171 @@
             </div>
           </div>
 
-          <div
-            style="
-              border: 1px solid var(--c-border);
-              border-radius: var(--radius-lg);
-              background: var(--c-paper-alt);
-              padding: 1.25rem;
-            "
-          >
-            <form
-              id="contactForm"
-              action="/api/contact"
-              method="post"
-              novalidate
-            >
-              <div style="display: grid; gap: 0.75rem">
-                <div>
-                  <label for="name"
-                    ><strong>Name</strong>
-                    <span class="muted">(required)</span></label
-                  >
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    autocomplete="name"
-                    required
-                    style="
-                      width: 100%;
-                      margin-top: 0.35rem;
-                      padding: 0.75rem;
-                      border: 1px solid var(--c-border);
-                      border-radius: var(--radius-sm);
-                    "
-                  />
-                </div>
+          <div class="surface form">
+  <form id="contactForm" action="/api/contact" method="post" novalidate>
+  <!-- Locale -->
+  <input type="hidden" name="locale" value="en" />
 
-                <div>
-                  <label for="email"
-                    ><strong>Email</strong>
-                    <span class="muted">(required)</span></label
-                  >
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    required
-                    style="
-                      width: 100%;
-                      margin-top: 0.35rem;
-                      padding: 0.75rem;
-                      border: 1px solid var(--c-border);
-                      border-radius: var(--radius-sm);
-                    "
-                  />
-                </div>
+  <!-- Honeypot (anti-spam) -->
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    inputmode="none"
+    aria-hidden="true"
+    class="hp-field"
+  />
 
-                <div>
-                  <label for="business"
-                    ><strong>Restaurant / Business</strong>
-                    <span class="muted">(optional)</span></label
-                  >
-                  <input
-                    id="business"
-                    name="business"
-                    type="text"
-                    autocomplete="organization"
-                    style="
-                      width: 100%;
-                      margin-top: 0.35rem;
-                      padding: 0.75rem;
-                      border: 1px solid var(--c-border);
-                      border-radius: var(--radius-sm);
-                    "
-                  />
-                </div>
+  <div class="form-grid">
+    <div>
+      <label for="name"
+        ><strong>Name</strong> <span class="muted">(required)</span></label
+      >
+      <input
+        id="name"
+        name="name"
+        type="text"
+        autocomplete="name"
+        required
+        maxlength="80"
+      />
+    </div>
 
-                <div>
-                  <label for="message"
-                    ><strong>What do you need help with?</strong>
-                    <span class="muted">(required)</span></label
-                  >
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="5"
-                    required
-                    style="
-                      width: 100%;
-                      margin-top: 0.35rem;
-                      padding: 0.75rem;
-                      border: 1px solid var(--c-border);
-                      border-radius: var(--radius-sm);
-                      resize: vertical;
-                    "
-                  ></textarea>
-                </div>
+    <div>
+      <label for="email"
+        ><strong>Email</strong> <span class="muted">(required)</span></label
+      >
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        maxlength="120"
+      />
+    </div>
 
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                  style="width: 100%"
-                >
-                  Send Message
-                </button>
+    <div>
+      <label for="phone"
+        ><strong>Phone</strong> <span class="muted">(optional)</span></label
+      >
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        maxlength="30"
+      />
+    </div>
 
-                <p
-                  id="formStatus"
-                  class="muted"
-                  aria-live="polite"
-                  style="margin: 0"
-                ></p>
-              </div>
-            </form>
+    <div>
+      <label for="language"
+        ><strong>Preferred language</strong>
+        <span class="muted">(optional)</span></label
+      >
+      <select id="language" name="language">
+        <option value="">— Select —</option>
+        <option value="English">English</option>
+        <option value="Spanish">Spanish</option>
+      </select>
+    </div>
 
-            <p class="muted" style="margin-top: 0.9rem; font-size: 0.9rem">
-              By submitting, you agree to our
-              <a href="/en/privacy/">Privacy Policy</a>.
-            </p>
-          </div>
+    <div>
+      <label for="business"
+        ><strong>Restaurant / Business</strong>
+        <span class="muted">(optional)</span></label
+      >
+      <input
+        id="business"
+        name="business"
+        type="text"
+        autocomplete="organization"
+        maxlength="120"
+      />
+    </div>
+
+    <div>
+      <label for="message"
+        ><strong>What do you need help with?</strong>
+        <span class="muted">(required)</span></label
+      >
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required
+        maxlength="1200"
+      ></textarea>
+    </div>
+
+    <div>
+      <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" style="width: 100%">
+      Send Message
+    </button>
+
+    <p id="formStatus" class="muted" aria-live="polite" style="margin: 0"></p>
+  </div>
+</form>
+
+</div>
+
         </div>
 
-        <!-- Bottom CTA repeat -->
-        <div class="container" style="margin-top: 2rem">
-          <div
-            style="
-              border-top: 1px solid var(--c-border);
-              padding-top: 1.5rem;
-              display: flex;
-              justify-content: space-between;
-              gap: 1rem;
-              flex-wrap: wrap;
-              align-items: center;
-            "
-          >
-            <p style="margin: 0; max-width: 70ch">
-              Ready to improve margins and consistency? Start with a quick
-              consultation.
-            </p>
-            <a
-              class="btn btn-outline"
-              href="#contact"
-              style="text-decoration: none"
-              >Request a Consultation</a
-            >
-          </div>
-        </div>
+      
       </section>
     </main>
 
-    <footer class="section" style="padding: 2rem 0">
-      <div
-        class="container"
-        style="
-          border-top: 1px solid var(--c-border);
-          padding-top: 1.25rem;
-          display: flex;
-          justify-content: space-between;
-          gap: 1rem;
-          flex-wrap: wrap;
-        "
-      >
-        <p class="muted" style="margin: 0">
-          © <span id="year"></span> AP Food Consulting
-        </p>
-        <p class="muted" style="margin: 0">
-          <a href="/en/about/">About</a> · <a href="/en/privacy/">Privacy</a>
-        </p>
-      </div>
-      <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-      </script>
-    </footer>
+  <footer class="footer">
+  <div class="container footer-grid">
+    <!-- Brand / Legal -->
+    <div class="footer-col">
+      <strong class="footer-brand">AP Food Consulting</strong>
+      <p class="muted footer-text">
+        Restaurant &amp; culinary consulting focused on profitable operations,
+        systems, and execution.
+      </p>
+      <p class="muted footer-small">
+        © <span id="year"></span> AP Food Consulting
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="footer-col">
+      <p class="footer-title">Company</p>
+      <ul class="footer-links">
+        <li><a href="/en/about/">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Legal -->
+    <div class="footer-col">
+      <p class="footer-title">Legal</p>
+      <ul class="footer-links">
+        <li><a href="/en/privacy/">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Locale / Availability -->
+    <div class="footer-col">
+      <p class="footer-title">Location</p>
+      <p class="muted footer-text">
+        Based in Miami<br />
+        Available in US &amp; LATAM
+      </p>
+
+      <a href="/es/" class="btn btn-outline btn--sm footer-lang">
+        Español
+      </a>
+    </div>
+  </div>
+</footer>
+
   </body>
 </html>
