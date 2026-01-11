@@ -823,3 +823,25 @@ select {
     gap: 1.5rem;
   }
 }
+
+/* Honeypot field must be invisible to humans */
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Form status (success/error) */
+#formStatus.is-success {
+  color: rgba(170, 255, 190, 0.9) !important;
+}
+#formStatus.is-error {
+  color: rgba(255, 130, 130, 0.9) !important;
+}
+
+.cf-turnstile {
+  margin-top: 0.25rem;
+}
