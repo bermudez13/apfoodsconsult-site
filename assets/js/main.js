@@ -2,9 +2,35 @@
 // AP Food Consulting - main.js (EN/ES + hero + header + mobile nav + contact form)
 
 (function () {
+  "use strict";
+
   // Footer year
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+})();
+
+/* Header offset: set CSS var to actual header height (fixes anchor scroll + hero padding) */
+(function () {
+  var header = document.querySelector(".site-header");
+  if (!header) return;
+
+  function setHeaderOffset() {
+    var h = header.getBoundingClientRect().height || 0;
+    // Add a small buffer for borders / rounding
+    var px = Math.max(64, Math.round(h + 8));
+    document.documentElement.style.setProperty("--header-offset", px + "px");
+  }
+
+  // Initial + on resize
+  window.addEventListener("resize", setHeaderOffset);
+  setHeaderOffset();
+
+  // If fonts load late and shift header height
+  if (document.fonts && typeof document.fonts.ready === "object") {
+    document.fonts.ready.then(function () {
+      setHeaderOffset();
+    });
+  }
 })();
 
 /* Mobile nav toggle (works if you have .nav-toggle + #primaryNav + .site-header.nav-open CSS) */
@@ -14,10 +40,23 @@
   var header = document.querySelector(".site-header");
   if (!toggle || !nav || !header) return;
 
+  var firstLink = nav.querySelector("a");
+
   function setOpen(isOpen) {
     header.classList.toggle("nav-open", isOpen);
     toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+
+    // Update header offset when menu opens/closes (height can change on some layouts)
+    var h = header.getBoundingClientRect().height || 0;
+    document.documentElement.style.setProperty(
+      "--header-offset",
+      Math.max(64, Math.round(h + 8)) + "px"
+    );
+
+    // Optional: move focus into menu for keyboard users
+    if (isOpen && firstLink) firstLink.focus();
+    if (!isOpen) toggle.focus();
   }
 
   toggle.addEventListener("click", function () {
@@ -227,7 +266,8 @@
   function setLoading(loading) {
     if (!submitBtn) return;
     submitBtn.disabled = !!loading;
-    submitBtn.dataset.originalText = submitBtn.dataset.originalText || submitBtn.textContent;
+    submitBtn.dataset.originalText =
+      submitBtn.dataset.originalText || submitBtn.textContent;
     submitBtn.textContent = loading ? t.sending : submitBtn.dataset.originalText;
   }
 
@@ -238,10 +278,25 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   }
 
+  function clampLen(v, max) {
+    v = String(v || "");
+    if (v.length <= max) return v;
+    return v.slice(0, max);
+  }
+
   function resetTurnstileIfPresent() {
     if (window.turnstile && typeof window.turnstile.reset === "function") {
-      try { window.turnstile.reset(); } catch (_) {}
+      try {
+        window.turnstile.reset();
+      } catch (_) {}
     }
+  }
+
+  // Mark invalid fields for better UX (minimal, no new DOM)
+  function markInvalid(el, isBad) {
+    if (!el) return;
+    if (isBad) el.setAttribute("aria-invalid", "true");
+    else el.removeAttribute("aria-invalid");
   }
 
   var inFlight = false;
@@ -260,12 +315,35 @@
     var email = emailEl ? String(emailEl.value || "").trim() : "";
     var message = messageEl ? String(messageEl.value || "").trim() : "";
 
-    if (!name || !email || !message) {
+    // Reset invalid markers
+    markInvalid(nameEl, false);
+    markInvalid(emailEl, false);
+    markInvalid(messageEl, false);
+
+    // Basic required validation
+    var missing = false;
+    if (!name) {
+      markInvalid(nameEl, true);
+      missing = true;
+    }
+    if (!email) {
+      markInvalid(emailEl, true);
+      missing = true;
+    }
+    if (!message) {
+      markInvalid(messageEl, true);
+      missing = true;
+    }
+    if (missing) {
       setStatus(t.invalid, "error");
+      (nameEl || emailEl || messageEl || form).focus();
       return;
     }
+
     if (!isValidEmail(email)) {
+      markInvalid(emailEl, true);
       setStatus(t.invalidEmail, "error");
+      emailEl && emailEl.focus();
       return;
     }
 
@@ -288,12 +366,19 @@
       return;
     }
 
+    // Normalize lengths client-side to reduce server work/noise
+    if (nameEl) nameEl.value = clampLen(nameEl.value, 80);
+    if (emailEl) emailEl.value = clampLen(emailEl.value, 120);
+    if (messageEl) messageEl.value = clampLen(messageEl.value, 1200);
+
     inFlight = true;
     setLoading(true);
 
     var controller = new AbortController();
     var timeoutId = window.setTimeout(function () {
-      try { controller.abort(); } catch (_) {}
+      try {
+        controller.abort();
+      } catch (_) {}
     }, 15000);
 
     (async function () {
@@ -309,7 +394,11 @@
 
         var raw = await res.text();
         var data = {};
-        try { data = raw ? JSON.parse(raw) : {}; } catch (_) { data = {}; }
+        try {
+          data = raw ? JSON.parse(raw) : {};
+        } catch (_) {
+          data = {};
+        }
 
         if (res.ok && data && data.ok) {
           setStatus(t.sent, "success");
