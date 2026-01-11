@@ -309,7 +309,12 @@ a:hover {
 }
 
 .grid-3 {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5); /* 1.5rem */
+}
+.services-cta {
+  margin-top: var(--space-5);
 }
 
 .hero-grid {
@@ -870,8 +875,10 @@ section[id] {
     grid-template-columns: 1fr;
   }
 
-  .grid-3 {
-    grid-template-columns: 1fr;
+  @media (max-width: 980px) {
+    .grid-3 {
+      grid-template-columns: 1fr;
+    }
   }
 
   .trust__grid {
