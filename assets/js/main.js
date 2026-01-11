@@ -16,16 +16,13 @@
 
   function setHeaderOffset() {
     var h = header.getBoundingClientRect().height || 0;
-    // Add a small buffer for borders / rounding
     var px = Math.max(64, Math.round(h + 8));
     document.documentElement.style.setProperty("--header-offset", px + "px");
   }
 
-  // Initial + on resize
   window.addEventListener("resize", setHeaderOffset);
   setHeaderOffset();
 
-  // If fonts load late and shift header height
   if (document.fonts && typeof document.fonts.ready === "object") {
     document.fonts.ready.then(function () {
       setHeaderOffset();
@@ -33,7 +30,7 @@
   }
 })();
 
-/* Mobile nav toggle (works if you have .nav-toggle + #primaryNav + .site-header.nav-open CSS) */
+/* Mobile nav toggle */
 (function () {
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("primaryNav");
@@ -47,14 +44,12 @@
     toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
 
-    // Update header offset when menu opens/closes (height can change on some layouts)
     var h = header.getBoundingClientRect().height || 0;
     document.documentElement.style.setProperty(
       "--header-offset",
       Math.max(64, Math.round(h + 8)) + "px"
     );
 
-    // Optional: move focus into menu for keyboard users
     if (isOpen && firstLink) firstLink.focus();
     if (!isOpen) toggle.focus();
   }
@@ -124,12 +119,12 @@
   }
 
   if (mq.addEventListener) mq.addEventListener("change", applySources);
-  else mq.addListener(applySources); // Safari fallback
+  else mq.addListener(applySources);
 
   applySources();
 })();
 
-/* Hero background slideshow (fade) + pause when out of view */
+/* Hero slideshow */
 (function () {
   var hero = document.querySelector(".hero-full");
   var images = Array.prototype.slice.call(document.querySelectorAll(".hero-img"));
@@ -206,7 +201,7 @@
   }
 })();
 
-/* Contact form (AJAX + i18n + Turnstile + honeypot + timeout + robust errors) */
+/* Contact form */
 (function () {
   var form = document.getElementById("contactForm");
   if (!form) return;
@@ -232,7 +227,6 @@
     en: {
       sending: "Sending…",
       sent: "Message sent. We’ll reply within 1–2 business days.",
-      error: "Could not send. Please try again in a few minutes.",
       network: "Network error. Please check your connection and try again.",
       timeout: "Request timed out. Please try again.",
       rateLimit: "Too many attempts. Please wait an hour and try again.",
@@ -244,7 +238,6 @@
     es: {
       sending: "Enviando…",
       sent: "Listo. Mensaje enviado. Te responderemos en 1–2 días laborables.",
-      error: "No se pudo enviar. Intenta de nuevo en unos minutos.",
       network: "Error de red. Revisa tu conexión e intenta de nuevo.",
       timeout: "La solicitud tardó demasiado. Intenta de nuevo.",
       rateLimit: "Demasiados intentos. Espera una hora e inténtalo de nuevo.",
@@ -280,19 +273,15 @@
 
   function clampLen(v, max) {
     v = String(v || "");
-    if (v.length <= max) return v;
-    return v.slice(0, max);
+    return v.length <= max ? v : v.slice(0, max);
   }
 
   function resetTurnstileIfPresent() {
     if (window.turnstile && typeof window.turnstile.reset === "function") {
-      try {
-        window.turnstile.reset();
-      } catch (_) {}
+      try { window.turnstile.reset(); } catch (_) {}
     }
   }
 
-  // Mark invalid fields for better UX (minimal, no new DOM)
   function markInvalid(el, isBad) {
     if (!el) return;
     if (isBad) el.setAttribute("aria-invalid", "true");
@@ -315,25 +304,15 @@
     var email = emailEl ? String(emailEl.value || "").trim() : "";
     var message = messageEl ? String(messageEl.value || "").trim() : "";
 
-    // Reset invalid markers
     markInvalid(nameEl, false);
     markInvalid(emailEl, false);
     markInvalid(messageEl, false);
 
-    // Basic required validation
     var missing = false;
-    if (!name) {
-      markInvalid(nameEl, true);
-      missing = true;
-    }
-    if (!email) {
-      markInvalid(emailEl, true);
-      missing = true;
-    }
-    if (!message) {
-      markInvalid(messageEl, true);
-      missing = true;
-    }
+    if (!name) { markInvalid(nameEl, true); missing = true; }
+    if (!email) { markInvalid(emailEl, true); missing = true; }
+    if (!message) { markInvalid(messageEl, true); missing = true; }
+
     if (missing) {
       setStatus(t.invalid, "error");
       (nameEl || emailEl || messageEl || form).focus();
@@ -347,26 +326,26 @@
       return;
     }
 
-    // Honeypot: name="company" (must be empty)
+    // Honeypot
     var hp = form.querySelector('input[name="company"]');
     if (hp && String(hp.value || "").trim()) {
-      // Silently accept
       form.reset();
       setStatus(t.sent, "success");
       resetTurnstileIfPresent();
       return;
     }
 
-    // Turnstile token is posted as "cf-turnstile-response"
-    var ts =
-      (form.querySelector('input[name="cf-turnstile-response"]') || {}).value || "";
+    // Turnstile token (IMPORTANT: can be textarea, not input)
+    var tsEl = form.querySelector('[name="cf-turnstile-response"]');
+    var ts = tsEl ? tsEl.value : "";
     ts = String(ts || "").trim();
+
     if (!ts) {
       setStatus(t.turnstile, "error");
       return;
     }
 
-    // Normalize lengths client-side to reduce server work/noise
+    // Clamp lengths client-side
     if (nameEl) nameEl.value = clampLen(nameEl.value, 80);
     if (emailEl) emailEl.value = clampLen(emailEl.value, 120);
     if (messageEl) messageEl.value = clampLen(messageEl.value, 1200);
@@ -376,9 +355,7 @@
 
     var controller = new AbortController();
     var timeoutId = window.setTimeout(function () {
-      try {
-        controller.abort();
-      } catch (_) {}
+      try { controller.abort(); } catch (_) {}
     }, 15000);
 
     (async function () {
@@ -394,11 +371,7 @@
 
         var raw = await res.text();
         var data = {};
-        try {
-          data = raw ? JSON.parse(raw) : {};
-        } catch (_) {
-          data = {};
-        }
+        try { data = raw ? JSON.parse(raw) : {}; } catch (_) { data = {}; }
 
         if (res.ok && data && data.ok) {
           setStatus(t.sent, "success");
@@ -407,13 +380,11 @@
           return;
         }
 
-        // Rate limit
         if (res.status === 429 || data.code === "RATE_LIMIT") {
           setStatus(t.rateLimit, "error");
           return;
         }
 
-        // Turnstile issues
         var isTurnstile =
           data.code === "TURNSTILE_REQUIRED" ||
           data.code === "TURNSTILE_FAILED" ||
@@ -425,17 +396,16 @@
           return;
         }
 
-        // Missing/invalid fields
         if (data.code === "MISSING_FIELDS") {
           setStatus(t.invalid, "error");
           return;
         }
+
         if (data.code === "INVALID_EMAIL") {
           setStatus(t.invalidEmail, "error");
           return;
         }
 
-        // Generic fallback (prefer server error if present)
         setStatus(data.error || t.fallbackEmail, "error");
         resetTurnstileIfPresent();
       } catch (err) {
