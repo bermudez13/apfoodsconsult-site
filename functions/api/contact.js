@@ -277,7 +277,7 @@ export async function onRequestPost(context) {
       subject,
       text: textBody,
       html: htmlBody,
-      replyTo: email, // keep simple; avoids format edge cases
+      reply_to: `${name} <${email}>`, // keep simple; avoids format edge cases
     };
 
     const rsResp = await fetch("https://api.resend.com/emails", {
