@@ -228,10 +228,12 @@ export async function onRequestPost(context) {
       );
     }
 
+    const timestamp = new Date().toISOString().slice(0, 16).replace("T", " ");
+
     const subject =
       locale.toLowerCase() === "es"
-        ? `${CONTACT_SUBJECT_PREFIX} Nueva solicitud desde el sitio`
-        : `${CONTACT_SUBJECT_PREFIX} New website inquiry`;
+         ? `${CONTACT_SUBJECT_PREFIX} Nueva solicitud (${timestamp})`
+    : `${CONTACT_SUBJECT_PREFIX} New website inquiry (${timestamp})`;
 
     const safePhone = phone || "(not provided)";
     const safeLanguage = language || "(not selected)";
