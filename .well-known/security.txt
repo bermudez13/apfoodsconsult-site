@@ -1,0 +1,5 @@
+Contact: mailto:info@apfoodconsulting.com
+Preferred-Languages: en, es
+Expires: 2026-12-31T23:59:59Z
+Policy: https://apfoodconsulting.com/en/privacy/
+Canonical: https://apfoodconsulting.com/.well-known/security.txt
