@@ -228,7 +228,10 @@ export async function onRequestPost(context) {
       );
     }
 
-    const timestamp = new Date().toISOString().slice(0, 16).replace("T", " ");
+   const timestamp = new Date().toLocaleString("sv-SE", {
+  timeZone: "America/New_York"
+}).replace("T", " ");
+
 
     const subject =
       locale.toLowerCase() === "es"
