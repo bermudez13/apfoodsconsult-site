@@ -970,3 +970,7 @@ section[id] {
 .policy-note {
   margin-top: 1.25rem;
 }
+
+.footer__inline {
+  margin: 0;
+}
