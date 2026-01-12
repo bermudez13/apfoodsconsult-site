@@ -1,10 +1,11 @@
 // File: /functions/api/contact.js
-// AP Food Consulting - contact endpoint (Turnstile + honeypot + optional KV rate limit + MailChannels)
+// AP Food Consulting - contact endpoint (Turnstile + honeypot + optional KV rate limit + Resend)
 //
 // Env vars expected (Cloudflare Pages -> Settings -> Environment variables):
 // - TURNSTILE_SECRET (required)
-// - CONTACT_TO (required)            comma-separated list allowed
-// - CONTACT_FROM (required)          e.g. "info@apfoodconsulting.com"
+// - RESEND_API_KEY (required)
+// - CONTACT_TO (required)            comma-separated list allowed (recommend: your personal Gmail)
+// - CONTACT_FROM (required)          e.g. "AP Food Consulting <info@apfoodconsulting.com>"
 // - CONTACT_SUBJECT_PREFIX (optional) default "[AP Food Consulting]"
 // - ALLOWED_ORIGINS (optional)       e.g. "https://apfoodconsulting.com,https://apfoodsconsult-site.pages.dev"
 //
@@ -40,13 +41,14 @@ export async function onRequestPost(context) {
     }
 
     const TURNSTILE_SECRET = env.TURNSTILE_SECRET;
+    const RESEND_API_KEY = env.RESEND_API_KEY;
     const CONTACT_TO = env.CONTACT_TO;
     const CONTACT_FROM = env.CONTACT_FROM;
     const CONTACT_SUBJECT_PREFIX =
       env.CONTACT_SUBJECT_PREFIX || "[AP Food Consulting]";
     const RATE_LIMIT_KV = env.RATE_LIMIT_KV; // optional KV binding
 
-    if (!TURNSTILE_SECRET || !CONTACT_TO || !CONTACT_FROM) {
+    if (!TURNSTILE_SECRET || !RESEND_API_KEY || !CONTACT_TO || !CONTACT_FROM) {
       // Do not reveal which env var is missing.
       return json(
         { ok: false, error: "Server misconfiguration.", code: "MISCONFIG", reqId },
@@ -212,7 +214,7 @@ export async function onRequestPost(context) {
     }
 
     // ----------------------------
-    // MailChannels send
+    // Resend send
     // ----------------------------
     const toList = CONTACT_TO.split(",")
       .map((s) => s.trim())
@@ -267,42 +269,41 @@ export async function onRequestPost(context) {
       `<p><small>Request ID: ${escapeHtml(reqId)}</small></p>`,
     ].join("");
 
-    const payload = {
-      personalizations: [
-        {
-          to: toList.map((addr) => ({ email: addr })),
-          reply_to: { email: email, name: name || undefined },
-        },
-      ],
-      from: { email: CONTACT_FROM, name: "AP Food Consulting" },
+    // Resend API: POST https://api.resend.com/emails
+    // Docs show "replyTo" (SDK) and supports "from/to/subject/html/text".
+    const resendPayload = {
+      from: CONTACT_FROM, // e.g. "AP Food Consulting <info@apfoodconsulting.com>"
+      to: toList, // array supported
       subject,
-      content: [
-        { type: "text/plain", value: textBody },
-        { type: "text/html", value: htmlBody },
-      ],
+      text: textBody,
+      html: htmlBody,
+      replyTo: email, // keep simple; avoids format edge cases
     };
 
-    const mcResp = await fetch("https://api.mailchannels.net/tx/v1/send", {
+    const rsResp = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+        "Idempotency-Key": reqId,
+      },
+      body: JSON.stringify(resendPayload),
     });
 
-    const mcText = await mcResp.text();
-    let mcJson = null;
+    const rsText = await rsResp.text();
+    let rsJson = null;
     try {
-      mcJson = mcText ? JSON.parse(mcText) : null;
+      rsJson = rsText ? JSON.parse(rsText) : null;
     } catch (_) {
-      mcJson = null;
+      rsJson = null;
     }
 
-    log("MailChannels response", { status: mcResp.status, ok: mcResp.ok });
+    log("Resend response", { status: rsResp.status, ok: rsResp.ok });
 
-    if (!mcResp.ok) {
-      // Do not forward provider payload to clients; keep it in logs only.
-      log("MailChannels error body", {
-        status: mcResp.status,
-        body: mcJson || mcText || null,
+    if (!rsResp.ok) {
+      log("Resend error body", {
+        status: rsResp.status,
+        body: rsJson || rsText || null,
       });
 
       return json(
@@ -311,6 +312,9 @@ export async function onRequestPost(context) {
         originForCors(origin, allowedOrigins)
       );
     }
+
+    // Optionally log returned id for traceability
+    if (rsJson?.id) log("Resend accepted", { id: rsJson.id });
 
     return json({ ok: true, reqId }, 200, originForCors(origin, allowedOrigins));
   } catch (err) {
