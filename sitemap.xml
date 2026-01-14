@@ -3,6 +3,7 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
+  <!-- Home (EN) -->
   <url>
     <loc>https://apfoodconsulting.com/en/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://apfoodconsulting.com/en/" />
@@ -10,8 +11,25 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://apfoodconsulting.com/en/" />
   </url>
 
+  <!-- Home (ES) -->
+  <url>
+    <loc>https://apfoodconsulting.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://apfoodconsulting.com/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://apfoodconsulting.com/es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apfoodconsulting.com/en/" />
+  </url>
+
+  <!-- Privacy (EN) -->
   <url>
     <loc>https://apfoodconsulting.com/en/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://apfoodconsulting.com/en/privacy/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://apfoodconsulting.com/es/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://apfoodconsulting.com/en/privacy/" />
+  </url>
+
+  <!-- Privacy (ES) -->
+  <url>
+    <loc>https://apfoodconsulting.com/es/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://apfoodconsulting.com/en/privacy/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://apfoodconsulting.com/es/privacy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://apfoodconsulting.com/en/privacy/" />
