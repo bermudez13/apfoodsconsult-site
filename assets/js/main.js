@@ -1,5 +1,6 @@
 // File: /assets/js/main.js
-// AP Food Consulting - main.js (EN/ES + hero + header + mobile nav + contact form)
+// AP Food Consulting - main.js
+// EN/ES + hero + header + mobile nav + contact form
 
 (function () {
   "use strict";
@@ -9,7 +10,8 @@
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 })();
 
-/* Header offset: set CSS var to actual header height (fixes anchor scroll + hero padding) */
+/* Header offset: set CSS var to actual header height
+   (fixes anchor scroll + hero padding) */
 (function () {
   var header = document.querySelector(".site-header");
   if (!header) return;
@@ -17,13 +19,21 @@
   function setHeaderOffset() {
     var h = header.getBoundingClientRect().height || 0;
     var px = Math.max(64, Math.round(h + 8));
-    document.documentElement.style.setProperty("--header-offset", px + "px");
+
+    document.documentElement.style.setProperty(
+      "--header-offset",
+      px + "px"
+    );
   }
 
   window.addEventListener("resize", setHeaderOffset);
+
   setHeaderOffset();
 
-  if (document.fonts && typeof document.fonts.ready === "object") {
+  if (
+    document.fonts &&
+    typeof document.fonts.ready === "object"
+  ) {
     document.fonts.ready.then(function () {
       setHeaderOffset();
     });
@@ -35,27 +45,44 @@
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("primaryNav");
   var header = document.querySelector(".site-header");
+
   if (!toggle || !nav || !header) return;
 
   var firstLink = nav.querySelector("a");
 
   function setOpen(isOpen) {
     header.classList.toggle("nav-open", isOpen);
-    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+
+    toggle.setAttribute(
+      "aria-expanded",
+      isOpen ? "true" : "false"
+    );
+
+    toggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close menu" : "Open menu"
+    );
 
     var h = header.getBoundingClientRect().height || 0;
+
     document.documentElement.style.setProperty(
       "--header-offset",
       Math.max(64, Math.round(h + 8)) + "px"
     );
 
-    if (isOpen && firstLink) firstLink.focus();
-    if (!isOpen) toggle.focus();
+    if (isOpen && firstLink) {
+      firstLink.focus();
+    }
+
+    if (!isOpen) {
+      toggle.focus();
+    }
   }
 
   toggle.addEventListener("click", function () {
-    setOpen(!header.classList.contains("nav-open"));
+    setOpen(
+      !header.classList.contains("nav-open")
+    );
   });
 
   nav.addEventListener("click", function (e) {
@@ -71,7 +98,10 @@
   });
 
   window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && header.classList.contains("nav-open")) {
+    if (
+      e.key === "Escape" &&
+      header.classList.contains("nav-open")
+    ) {
       setOpen(false);
     }
   });
@@ -90,6 +120,7 @@
 (function () {
   var header = document.querySelector(".site-header");
   var hero = document.querySelector(".hero-full");
+
   if (!header || !hero) return;
 
   function apply() {
@@ -106,8 +137,14 @@
     }
   }
 
-  window.addEventListener("scroll", apply, { passive: true });
+  window.addEventListener(
+    "scroll",
+    apply,
+    { passive: true }
+  );
+
   window.addEventListener("resize", apply);
+
   apply();
 })();
 
@@ -119,14 +156,19 @@
 
   if (!heroImgs.length) return;
 
-  var mq = window.matchMedia("(max-width: 980px)");
+  var mq = window.matchMedia(
+    "(max-width: 980px)"
+  );
 
   function applySources() {
     var isMobile = mq.matches;
 
     heroImgs.forEach(function (img) {
-      var desktop = img.getAttribute("data-desktop");
-      var mobile = img.getAttribute("data-mobile");
+      var desktop =
+        img.getAttribute("data-desktop");
+
+      var mobile =
+        img.getAttribute("data-mobile");
 
       var desired = isMobile
         ? mobile || desktop
@@ -134,14 +176,19 @@
 
       if (!desired) return;
 
-      if (img.getAttribute("src") !== desired) {
+      if (
+        img.getAttribute("src") !== desired
+      ) {
         img.setAttribute("src", desired);
       }
     });
   }
 
   if (mq.addEventListener) {
-    mq.addEventListener("change", applySources);
+    mq.addEventListener(
+      "change",
+      applySources
+    );
   } else {
     mq.addListener(applySources);
   }
@@ -151,16 +198,23 @@
 
 /* Hero slideshow */
 (function () {
-  var hero = document.querySelector(".hero-full");
-  var images = Array.prototype.slice.call(
-    document.querySelectorAll(".hero-img")
-  );
+  var hero =
+    document.querySelector(".hero-full");
 
-  if (!hero || images.length <= 1) return;
+  var images =
+    Array.prototype.slice.call(
+      document.querySelectorAll(".hero-img")
+    );
+
+  if (!hero || images.length <= 1) {
+    return;
+  }
 
   var prefersReduced =
     window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
   if (prefersReduced) return;
 
@@ -190,25 +244,42 @@
     });
 
     index = 0;
-    preload(getSrc(images[1]));
+
+    preload(
+      getSrc(images[1])
+    );
   }
 
   function tick() {
     var current = images[index];
-    var nextIndex = (index + 1) % images.length;
-    var next = images[nextIndex];
 
-    var afterNextIndex = (nextIndex + 1) % images.length;
-    preload(getSrc(images[afterNextIndex]));
+    var nextIndex =
+      (index + 1) % images.length;
+
+    var next =
+      images[nextIndex];
+
+    var afterNextIndex =
+      (nextIndex + 1) % images.length;
+
+    preload(
+      getSrc(images[afterNextIndex])
+    );
 
     current.classList.remove("active");
     next.classList.add("active");
+
     index = nextIndex;
   }
 
   function start() {
     if (timerId) return;
-    timerId = window.setInterval(tick, intervalMs);
+
+    timerId =
+      window.setInterval(
+        tick,
+        intervalMs
+      );
   }
 
   function stop() {
@@ -221,20 +292,23 @@
   ensureInitialState();
 
   if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        var entry = entries[0];
+    var io =
+      new IntersectionObserver(
+        function (entries) {
+          var entry = entries[0];
 
-        if (!entry) return;
+          if (!entry) return;
 
-        if (entry.isIntersecting) {
-          start();
-        } else {
-          stop();
+          if (entry.isIntersecting) {
+            start();
+          } else {
+            stop();
+          }
+        },
+        {
+          threshold: 0.12,
         }
-      },
-      { threshold: 0.12 }
-    );
+      );
 
     io.observe(hero);
   } else {
@@ -244,24 +318,59 @@
 
 /* Contact form */
 (function () {
-  var form = document.getElementById("contactForm");
+  var form =
+    document.getElementById("contactForm");
+
   if (!form) return;
 
-  var submitBtn = form.querySelector('button[type="submit"]');
-  var statusEl = document.getElementById("formStatus");
+  var submitBtn =
+    form.querySelector(
+      'button[type="submit"]'
+    );
+
+  var statusEl =
+    document.getElementById("formStatus");
 
   function getLocale() {
-    var hidden = form.querySelector('input[name="locale"]');
-    var v = hidden ? String(hidden.value || "").toLowerCase() : "";
+    var hidden =
+      form.querySelector(
+        'input[name="locale"]'
+      );
 
-    if (v === "es" || v === "en") return v;
+    var v = hidden
+      ? String(
+          hidden.value || ""
+        ).toLowerCase()
+      : "";
 
-    var lang = (document.documentElement.lang || "").toLowerCase();
+    if (
+      v === "es" ||
+      v === "en"
+    ) {
+      return v;
+    }
 
-    if (lang.startsWith("es")) return "es";
-    if (lang.startsWith("en")) return "en";
+    var lang =
+      (
+        document.documentElement.lang ||
+        ""
+      ).toLowerCase();
 
-    if (window.location.pathname.startsWith("/es/")) return "es";
+    if (lang.startsWith("es")) {
+      return "es";
+    }
+
+    if (lang.startsWith("en")) {
+      return "en";
+    }
+
+    if (
+      window.location.pathname.startsWith(
+        "/es/"
+      )
+    ) {
+      return "es";
+    }
 
     return "en";
   }
@@ -270,35 +379,89 @@
 
   var t = {
     en: {
-      sending: "Sending…",
-      sent: "Message sent. We’ll reply within 1–2 business days.",
-      network: "Network error. Please check your connection and try again.",
-      timeout: "Request timed out. Please try again.",
-      rateLimit: "Too many attempts. Please wait an hour and try again.",
-      turnstile: "Please complete the security check and try again.",
+      sending:
+        "Sending…",
+
+      sent:
+        "Message sent. We’ll reply within 1–2 business days.",
+
+      network:
+        "Network error. Please check your connection and try again.",
+
+      timeout:
+        "Request timed out. Please try again.",
+
+      rateLimit:
+        "Too many attempts. Please wait an hour and try again.",
+
+      turnstile:
+        "Please complete the security check and try again.",
+
+      nameRequired:
+        "Please enter your name.",
+
+      emailRequired:
+        "Please enter your email.",
+
+      countyRequired:
+        "Please select your service county.",
+
+      messageRequired:
+        "Please tell us what you need help with.",
+
       invalid:
-        "Please check the required fields (name, email, county, and message).",
-      invalidEmail: "Email doesn't look valid.",
+        "Please check the required fields.",
+
+      invalidEmail:
+        "Email doesn't look valid.",
+
       outsideArea:
         "We currently don't provide service in the selected area.",
+
       fallbackEmail:
         "Something went wrong. Please email info@apfoodconsulting.com.",
     },
 
     es: {
-      sending: "Enviando…",
-      sent: "Listo. Mensaje enviado. Te responderemos en 1–2 días laborables.",
-      network: "Error de red. Revisa tu conexión e intenta de nuevo.",
-      timeout: "La solicitud tardó demasiado. Intenta de nuevo.",
+      sending:
+        "Enviando…",
+
+      sent:
+        "Listo. Mensaje enviado. Te responderemos en 1–2 días laborables.",
+
+      network:
+        "Error de red. Revisa tu conexión e intenta de nuevo.",
+
+      timeout:
+        "La solicitud tardó demasiado. Intenta de nuevo.",
+
       rateLimit:
         "Demasiados intentos. Espera una hora e inténtalo de nuevo.",
+
       turnstile:
         "Completa la verificación de seguridad e inténtalo otra vez.",
+
+      nameRequired:
+        "Por favor, introduce tu nombre.",
+
+      emailRequired:
+        "Por favor, introduce tu email.",
+
+      countyRequired:
+        "Por favor, selecciona el condado del servicio.",
+
+      messageRequired:
+        "Por favor, dinos en qué necesitas ayuda.",
+
       invalid:
-        "Revisa los campos requeridos (nombre, email, condado y mensaje).",
-      invalidEmail: "El email no parece válido.",
+        "Revisa los campos requeridos.",
+
+      invalidEmail:
+        "El email no parece válido.",
+
       outsideArea:
         "Actualmente no ofrecemos servicios en el área seleccionada.",
+
       fallbackEmail:
         "Ocurrió un error. Escríbenos a info@apfoodconsulting.com.",
     },
@@ -307,38 +470,56 @@
   function setStatus(message, kind) {
     if (!statusEl) return;
 
-    statusEl.textContent = message || "";
-    statusEl.classList.remove("is-success", "is-error");
+    statusEl.textContent =
+      message || "";
+
+    statusEl.classList.remove(
+      "is-success",
+      "is-error"
+    );
 
     if (kind === "success") {
-      statusEl.classList.add("is-success");
+      statusEl.classList.add(
+        "is-success"
+      );
     }
 
     if (kind === "error") {
-      statusEl.classList.add("is-error");
+      statusEl.classList.add(
+        "is-error"
+      );
     }
   }
 
   function setLoading(loading) {
     if (!submitBtn) return;
 
-    submitBtn.disabled = !!loading;
+    submitBtn.disabled =
+      !!loading;
 
     submitBtn.dataset.originalText =
-      submitBtn.dataset.originalText || submitBtn.textContent;
+      submitBtn.dataset.originalText ||
+      submitBtn.textContent;
 
-    submitBtn.textContent = loading
-      ? t.sending
-      : submitBtn.dataset.originalText;
+    submitBtn.textContent =
+      loading
+        ? t.sending
+        : submitBtn.dataset.originalText;
   }
 
   function isValidEmail(email) {
-    var v = String(email || "").trim();
+    var v =
+      String(email || "").trim();
 
     if (!v) return false;
-    if (v.length > 254) return false;
 
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if (v.length > 254) {
+      return false;
+    }
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+      v
+    );
   }
 
   function clampLen(v, max) {
@@ -352,7 +533,8 @@
   function resetTurnstileIfPresent() {
     if (
       window.turnstile &&
-      typeof window.turnstile.reset === "function"
+      typeof window.turnstile.reset ===
+        "function"
     ) {
       try {
         window.turnstile.reset();
@@ -364,253 +546,449 @@
     if (!el) return;
 
     if (isBad) {
-      el.setAttribute("aria-invalid", "true");
+      el.setAttribute(
+        "aria-invalid",
+        "true"
+      );
     } else {
-      el.removeAttribute("aria-invalid");
+      el.removeAttribute(
+        "aria-invalid"
+      );
     }
   }
 
   var inFlight = false;
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  form.addEventListener(
+    "submit",
+    function (e) {
+      e.preventDefault();
 
-    if (inFlight) return;
+      if (inFlight) return;
 
-    setStatus("", null);
+      setStatus("", null);
 
-    var nameEl = form.querySelector('input[name="name"]');
-    var emailEl = form.querySelector('input[name="email"]');
-    var countyEl = form.querySelector('select[name="county"]');
-    var messageEl = form.querySelector('textarea[name="message"]');
-
-    var name = nameEl
-      ? String(nameEl.value || "").trim()
-      : "";
-
-    var email = emailEl
-      ? String(emailEl.value || "").trim()
-      : "";
-
-    var county = countyEl
-      ? String(countyEl.value || "").trim()
-      : "";
-
-    var message = messageEl
-      ? String(messageEl.value || "").trim()
-      : "";
-
-    markInvalid(nameEl, false);
-    markInvalid(emailEl, false);
-    markInvalid(countyEl, false);
-    markInvalid(messageEl, false);
-
-    var missing = false;
-    var firstInvalid = null;
-
-    if (!name) {
-      markInvalid(nameEl, true);
-      missing = true;
-
-      if (!firstInvalid) {
-        firstInvalid = nameEl;
-      }
-    }
-
-    if (!email) {
-      markInvalid(emailEl, true);
-      missing = true;
-
-      if (!firstInvalid) {
-        firstInvalid = emailEl;
-      }
-    }
-
-    if (!county) {
-      markInvalid(countyEl, true);
-      missing = true;
-
-      if (!firstInvalid) {
-        firstInvalid = countyEl;
-      }
-    }
-
-    if (!message) {
-      markInvalid(messageEl, true);
-      missing = true;
-
-      if (!firstInvalid) {
-        firstInvalid = messageEl;
-      }
-    }
-
-    if (missing) {
-      setStatus(t.invalid, "error");
-
-      if (firstInvalid && typeof firstInvalid.focus === "function") {
-        firstInvalid.focus();
-      }
-
-      return;
-    }
-
-    if (!isValidEmail(email)) {
-      markInvalid(emailEl, true);
-      setStatus(t.invalidEmail, "error");
-
-      if (emailEl) {
-        emailEl.focus();
-      }
-
-      return;
-    }
-
-    // Honeypot
-    var hp = form.querySelector('input[name="company"]');
-
-    if (hp && String(hp.value || "").trim()) {
-      form.reset();
-      setStatus(t.sent, "success");
-      resetTurnstileIfPresent();
-      return;
-    }
-
-    // Turnstile token (IMPORTANT: can be textarea, not input)
-    var tsEl = form.querySelector(
-      '[name="cf-turnstile-response"]'
-    );
-
-    var ts = tsEl ? tsEl.value : "";
-    ts = String(ts || "").trim();
-
-    if (!ts) {
-      setStatus(t.turnstile, "error");
-      return;
-    }
-
-    // Clamp lengths client-side
-    if (nameEl) {
-      nameEl.value = clampLen(nameEl.value, 80);
-    }
-
-    if (emailEl) {
-      emailEl.value = clampLen(emailEl.value, 120);
-    }
-
-    if (messageEl) {
-      messageEl.value = clampLen(messageEl.value, 1200);
-    }
-
-    inFlight = true;
-    setLoading(true);
-
-    var controller = new AbortController();
-
-    var timeoutId = window.setTimeout(function () {
-      try {
-        controller.abort();
-      } catch (_) {}
-    }, 15000);
-
-    (async function () {
-      try {
-        var formData = new FormData(form);
-
-        var res = await fetch(
-          form.getAttribute("action") || "/api/contact",
-          {
-            method: "POST",
-            body: formData,
-            headers: {
-              Accept: "application/json",
-            },
-            signal: controller.signal,
-          }
+      var nameEl =
+        form.querySelector(
+          'input[name="name"]'
         );
 
-        var raw = await res.text();
-        var data = {};
+      var emailEl =
+        form.querySelector(
+          'input[name="email"]'
+        );
 
-        try {
-          data = raw
-            ? JSON.parse(raw)
-            : {};
-        } catch (_) {
-          data = {};
+      var countyEl =
+        form.querySelector(
+          'select[name="county"]'
+        );
+
+      var messageEl =
+        form.querySelector(
+          'textarea[name="message"]'
+        );
+
+      var name = nameEl
+        ? String(
+            nameEl.value || ""
+          ).trim()
+        : "";
+
+      var email = emailEl
+        ? String(
+            emailEl.value || ""
+          ).trim()
+        : "";
+
+      var county = countyEl
+        ? String(
+            countyEl.value || ""
+          ).trim()
+        : "";
+
+      var message = messageEl
+        ? String(
+            messageEl.value || ""
+          ).trim()
+        : "";
+
+      // Clear previous invalid states
+      markInvalid(nameEl, false);
+      markInvalid(emailEl, false);
+      markInvalid(countyEl, false);
+      markInvalid(messageEl, false);
+
+      var missing = false;
+      var firstInvalid = null;
+      var firstInvalidMessage = "";
+
+      // Name validation
+      if (!name) {
+        markInvalid(nameEl, true);
+        missing = true;
+
+        if (!firstInvalid) {
+          firstInvalid = nameEl;
+          firstInvalidMessage =
+            t.nameRequired;
         }
+      }
 
-        if (res.ok && data && data.ok) {
-          setStatus(t.sent, "success");
-          form.reset();
-          resetTurnstileIfPresent();
-          return;
+      // Email required
+      if (!email) {
+        markInvalid(emailEl, true);
+        missing = true;
+
+        if (!firstInvalid) {
+          firstInvalid = emailEl;
+          firstInvalidMessage =
+            t.emailRequired;
         }
+      }
 
-        if (
-          res.status === 429 ||
-          data.code === "RATE_LIMIT"
-        ) {
-          setStatus(t.rateLimit, "error");
-          return;
+      // County required
+      if (!county) {
+        markInvalid(countyEl, true);
+        missing = true;
+
+        if (!firstInvalid) {
+          firstInvalid = countyEl;
+          firstInvalidMessage =
+            t.countyRequired;
         }
+      }
 
-        var isTurnstile =
-          data.code === "TURNSTILE_REQUIRED" ||
-          data.code === "TURNSTILE_FAILED" ||
-          res.status === 403;
+      // Message required
+      if (!message) {
+        markInvalid(
+          messageEl,
+          true
+        );
 
-        if (isTurnstile) {
-          resetTurnstileIfPresent();
-          setStatus(t.turnstile, "error");
-          return;
+        missing = true;
+
+        if (!firstInvalid) {
+          firstInvalid =
+            messageEl;
+
+          firstInvalidMessage =
+            t.messageRequired;
         }
+      }
 
-        if (data.code === "MISSING_FIELDS") {
-          setStatus(t.invalid, "error");
-          return;
-        }
-
-        if (data.code === "INVALID_EMAIL") {
-          markInvalid(emailEl, true);
-          setStatus(t.invalidEmail, "error");
-
-          if (emailEl) {
-            emailEl.focus();
-          }
-
-          return;
-        }
-
-        if (data.code === "OUTSIDE_SERVICE_AREA") {
-          markInvalid(countyEl, true);
-          setStatus(t.outsideArea, "error");
-
-          if (countyEl) {
-            countyEl.focus();
-          }
-
-          return;
-        }
-
+      // Show specific message
+      // for first missing field
+      if (missing) {
         setStatus(
-          data.error || t.fallbackEmail,
+          firstInvalidMessage ||
+            t.invalid,
           "error"
         );
 
-        resetTurnstileIfPresent();
-      } catch (err) {
-        if (err && err.name === "AbortError") {
-          setStatus(t.timeout, "error");
-        } else {
-          setStatus(t.network, "error");
+        if (
+          firstInvalid &&
+          typeof firstInvalid.focus ===
+            "function"
+        ) {
+          firstInvalid.focus();
         }
 
-        resetTurnstileIfPresent();
-      } finally {
-        window.clearTimeout(timeoutId);
-        setLoading(false);
-        inFlight = false;
+        return;
       }
-    })();
-  });
+
+      // Email format validation
+      if (!isValidEmail(email)) {
+        markInvalid(
+          emailEl,
+          true
+        );
+
+        setStatus(
+          t.invalidEmail,
+          "error"
+        );
+
+        if (emailEl) {
+          emailEl.focus();
+        }
+
+        return;
+      }
+
+      // Honeypot
+      var hp =
+        form.querySelector(
+          'input[name="company"]'
+        );
+
+      if (
+        hp &&
+        String(
+          hp.value || ""
+        ).trim()
+      ) {
+        form.reset();
+
+        setStatus(
+          t.sent,
+          "success"
+        );
+
+        resetTurnstileIfPresent();
+
+        return;
+      }
+
+      // Turnstile token
+      // IMPORTANT:
+      // can be textarea, not input
+      var tsEl =
+        form.querySelector(
+          '[name="cf-turnstile-response"]'
+        );
+
+      var ts =
+        tsEl
+          ? tsEl.value
+          : "";
+
+      ts =
+        String(ts || "").trim();
+
+      if (!ts) {
+        setStatus(
+          t.turnstile,
+          "error"
+        );
+
+        return;
+      }
+
+      // Clamp lengths client-side
+      if (nameEl) {
+        nameEl.value =
+          clampLen(
+            nameEl.value,
+            80
+          );
+      }
+
+      if (emailEl) {
+        emailEl.value =
+          clampLen(
+            emailEl.value,
+            120
+          );
+      }
+
+      if (messageEl) {
+        messageEl.value =
+          clampLen(
+            messageEl.value,
+            1200
+          );
+      }
+
+      inFlight = true;
+
+      setLoading(true);
+
+      var controller =
+        new AbortController();
+
+      var timeoutId =
+        window.setTimeout(
+          function () {
+            try {
+              controller.abort();
+            } catch (_) {}
+          },
+          15000
+        );
+
+      (async function () {
+        try {
+          var formData =
+            new FormData(form);
+
+          var res =
+            await fetch(
+              form.getAttribute(
+                "action"
+              ) ||
+                "/api/contact",
+              {
+                method: "POST",
+
+                body: formData,
+
+                headers: {
+                  Accept:
+                    "application/json",
+                },
+
+                signal:
+                  controller.signal,
+              }
+            );
+
+          var raw =
+            await res.text();
+
+          var data = {};
+
+          try {
+            data = raw
+              ? JSON.parse(raw)
+              : {};
+          } catch (_) {
+            data = {};
+          }
+
+          // Success
+          if (
+            res.ok &&
+            data &&
+            data.ok
+          ) {
+            setStatus(
+              t.sent,
+              "success"
+            );
+
+            form.reset();
+
+            resetTurnstileIfPresent();
+
+            return;
+          }
+
+          // Rate limit
+          if (
+            res.status === 429 ||
+            data.code ===
+              "RATE_LIMIT"
+          ) {
+            setStatus(
+              t.rateLimit,
+              "error"
+            );
+
+            return;
+          }
+
+          // Turnstile errors
+          var isTurnstile =
+            data.code ===
+              "TURNSTILE_REQUIRED" ||
+            data.code ===
+              "TURNSTILE_FAILED" ||
+            res.status === 403;
+
+          if (isTurnstile) {
+            resetTurnstileIfPresent();
+
+            setStatus(
+              t.turnstile,
+              "error"
+            );
+
+            return;
+          }
+
+          // Backend says required field missing
+          if (
+            data.code ===
+            "MISSING_FIELDS"
+          ) {
+            setStatus(
+              t.invalid,
+              "error"
+            );
+
+            return;
+          }
+
+          // Invalid email
+          if (
+            data.code ===
+            "INVALID_EMAIL"
+          ) {
+            markInvalid(
+              emailEl,
+              true
+            );
+
+            setStatus(
+              t.invalidEmail,
+              "error"
+            );
+
+            if (emailEl) {
+              emailEl.focus();
+            }
+
+            return;
+          }
+
+          // County outside service area
+          if (
+            data.code ===
+            "OUTSIDE_SERVICE_AREA"
+          ) {
+            markInvalid(
+              countyEl,
+              true
+            );
+
+            setStatus(
+              t.outsideArea,
+              "error"
+            );
+
+            if (countyEl) {
+              countyEl.focus();
+            }
+
+            return;
+          }
+
+          // Generic fallback
+          setStatus(
+            data.error ||
+              t.fallbackEmail,
+            "error"
+          );
+
+          resetTurnstileIfPresent();
+        } catch (err) {
+          if (
+            err &&
+            err.name ===
+              "AbortError"
+          ) {
+            setStatus(
+              t.timeout,
+              "error"
+            );
+          } else {
+            setStatus(
+              t.network,
+              "error"
+            );
+          }
+
+          resetTurnstileIfPresent();
+        } finally {
+          window.clearTimeout(
+            timeoutId
+          );
+
+          setLoading(false);
+
+          inFlight = false;
+        }
+      })();
+    }
+  );
 })();
