@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -69,6 +69,7 @@
       async
       defer
     ></script>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -76,7 +77,28 @@
         "name": "AP Food Consulting",
         "url": "https://apfoodconsulting.com",
         "email": "info@apfoodconsulting.com",
-        "areaServed": ["US", "Latin America"],
+        "areaServed": [
+          {
+            "@type": "AdministrativeArea",
+            "name": "Miami-Dade County, Florida"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Broward County, Florida"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Palm Beach County, Florida"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Collier County, Florida"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Lee County, Florida"
+          }
+        ],
         "sameAs": ["https://www.instagram.com/chefalejandroporben/"],
         "founder": {
           "@type": "Person",
@@ -134,6 +156,7 @@
             decoding="async"
             fetchpriority="high"
           />
+
           <img
             class="hero-img"
             src="/assets/img/hero/hero-food-02.jpg"
@@ -143,6 +166,7 @@
             loading="lazy"
             decoding="async"
           />
+
           <img
             class="hero-img"
             src="/assets/img/hero/hero-food-03.jpg"
@@ -168,14 +192,16 @@
             </p>
 
             <div class="btn-row">
-              <a class="btn btn-primary" href="#contact"
-                >Request a Consultation</a
-              >
-              <a class="btn btn-outline" href="#services">View Services</a>
+              <a class="btn btn-primary" href="#contact">
+                Request a Consultation
+              </a>
+
+              <a class="btn btn-outline" href="#services"> View Services </a>
             </div>
 
             <p class="muted hero-sub">
-              Based in Miami • Available for US / LATAM • On-site or remote
+              Based in Miami • Serving South &amp; Southwest Florida • On-site
+              consulting
             </p>
           </div>
         </div>
@@ -189,14 +215,17 @@
               <strong>Profit-first</strong>
               <div class="muted">Decisions driven by numbers</div>
             </div>
+
             <div>
               <strong>Operator-ready</strong>
               <div class="muted">Built for real kitchens</div>
             </div>
+
             <div>
               <strong>Hands-on</strong>
               <div class="muted">BOH &amp; FOH execution</div>
             </div>
+
             <div>
               <strong>Fast clarity</strong>
               <div class="muted">90-minute diagnostic</div>
@@ -209,6 +238,7 @@
       <section id="services" class="section">
         <div class="container">
           <h2>Services</h2>
+
           <p class="section-lead">
             Execution-driven consulting for openings, operational structure, and
             margin improvement—built to protect investment, tighten controls,
@@ -218,59 +248,75 @@
           <div class="grid grid-3 services-grid">
             <article class="card">
               <h3>Restaurant Opening Support</h3>
+
               <p>
                 Pre-opening structure and launch execution: menu build, kitchen
                 setup, staffing plan, training, and day-one standards.
               </p>
+
               <a class="btn btn-outline" href="#contact">Plan My Opening</a>
             </article>
 
             <article class="card">
               <h3>Cost Control &amp; Turnaround</h3>
+
               <p>
                 When margin is slipping: food &amp; labor targets, purchasing
                 and prep controls, menu engineering, and management
                 accountability.
               </p>
+
               <a class="btn btn-outline" href="#contact">Reduce Costs</a>
             </article>
 
             <article class="card">
               <h3>Ongoing Operational Advisory</h3>
+
               <p>
                 Executive-level guidance without a full-time hire: KPI rhythm,
                 weekly check-ins, and operational adjustments to keep
                 performance improving.
               </p>
+
               <a class="btn btn-outline" href="#contact">Request Advisory</a>
             </article>
 
             <article class="card">
               <h3>Emergency Stabilization</h3>
+
               <p>
                 Rapid intervention for urgent situations: cost reset, labor
                 alignment, waste control, and a recovery plan your team can
                 execute.
               </p>
-              <a class="btn btn-outline" href="#contact">Get Immediate Help</a>
+
+              <a class="btn btn-outline" href="#contact">
+                Get Immediate Help
+              </a>
             </article>
 
             <article class="card">
               <h3>Training &amp; Standards</h3>
+
               <p>
                 BOH/FOH training plans, station standards, tastings, quality
                 checks, and leadership coaching to sustain execution.
               </p>
-              <a class="btn btn-outline" href="#contact">Improve Training</a>
+
+              <a class="btn btn-outline" href="#contact"> Improve Training </a>
             </article>
 
             <article class="card">
               <h3>Audit &amp; Roadmap</h3>
+
               <p>
                 A fast diagnostic with prioritized fixes and a clear 30–60–90
                 day plan focused on margin, systems, and consistency.
               </p>
-              <a class="btn btn-outline" href="#contact">Start With an Audit</a>
+
+              <a class="btn btn-outline" href="#contact">
+                Start With an Audit
+              </a>
             </article>
           </div>
 
@@ -292,13 +338,17 @@
               <li>
                 <strong>Discovery</strong> — Goals, constraints, priorities
               </li>
+
               <li>
                 <strong>Audit</strong> — Operations, menu, costs, execution
               </li>
+
               <li><strong>Plan</strong> — Clear roadmap and targets</li>
+
               <li>
                 <strong>Execute</strong> — Systems, training, accountability
               </li>
+
               <li><strong>Stabilize</strong> — Consistency and improvement</li>
             </ol>
           </div>
@@ -339,10 +389,11 @@
             <p>
               His background includes hands-on work with established and
               high-performing concepts such as
-              <strong
-                >Soho House, Amalfi Llama, Sparrow, Scarpetta, Fontainebleau,
-                Tamarina, Pubbelly</strong
-              >, and other independent and group-operated restaurants across
+              <strong>
+                Soho House, Amalfi Llama, Sparrow, Scarpetta, Fontainebleau,
+                Tamarina, Pubbelly
+              </strong>
+              , and other independent and group-operated restaurants across
               different markets.
             </p>
 
@@ -351,10 +402,11 @@
               <strong>execution, systems, and accountability</strong>. Rather
               than theoretical frameworks, he focuses on building practical
               structures that teams can actually follow—covering
-              <strong
-                >menu engineering, cost control, BOH/FOH SOPs, training systems,
-                and operational leadership</strong
-              >.
+              <strong>
+                menu engineering, cost control, BOH/FOH SOPs, training systems,
+                and operational leadership
+              </strong>
+              .
             </p>
 
             <p>
@@ -381,6 +433,7 @@
       <section id="case-studies" class="section">
         <div class="container">
           <h2>Case Studies</h2>
+
           <p class="muted case-studies-lead">
             Results vary by operation. When needed, projects can remain
             confidential while still showing approach and outcomes.
@@ -389,12 +442,14 @@
           <div class="grid grid-3 case-studies-grid">
             <article class="card card--lg case">
               <div class="muted card__kicker">Operational Turnaround</div>
+
               <h3 class="case__title">
                 High Food Cost + Inconsistent Execution
               </h3>
 
               <div class="case__block">
                 <p class="muted case__label">Challenge</p>
+
                 <p class="case__text">
                   Food cost above target, overproduction, and inconsistent BOH
                   execution impacting margins and guest experience.
@@ -403,6 +458,7 @@
 
               <div class="case__block">
                 <p class="muted case__label">Actions</p>
+
                 <ul class="case__list">
                   <li>Menu engineering + recipe costing structure</li>
                   <li>Prep systems, pars, and ordering controls</li>
@@ -412,6 +468,7 @@
 
               <div class="case__block">
                 <p class="muted case__label">Outcome</p>
+
                 <p class="case__text">
                   Better cost visibility, reduced waste, and more consistent
                   execution with management tracking.
@@ -421,12 +478,14 @@
 
             <article class="card card--lg case">
               <div class="muted card__kicker">Restaurant Opening</div>
+
               <h3 class="case__title">
                 Pre-Opening Systems + Launch Execution
               </h3>
 
               <div class="case__block">
                 <p class="muted case__label">Challenge</p>
+
                 <p class="case__text">
                   A new concept needed structure, staffing, training systems,
                   and launch execution to protect timeline and budget.
@@ -435,6 +494,7 @@
 
               <div class="case__block">
                 <p class="muted case__label">Actions</p>
+
                 <ul class="case__list">
                   <li>Menu structure aligned to profitability targets</li>
                   <li>BOH/FOH SOPs + training checklist</li>
@@ -444,6 +504,7 @@
 
               <div class="case__block">
                 <p class="muted case__label">Outcome</p>
+
                 <p class="case__text">
                   Organized launch, trained team, and operational readiness for
                   consistency from day one.
@@ -453,10 +514,12 @@
 
             <article class="card card--lg case">
               <div class="muted card__kicker">Standardization</div>
+
               <h3 class="case__title">Scaling Systems for Consistency</h3>
 
               <div class="case__block">
                 <p class="muted case__label">Challenge</p>
+
                 <p class="case__text">
                   Inconsistent execution required standardized SOPs, training,
                   and performance controls to maintain quality.
@@ -465,6 +528,7 @@
 
               <div class="case__block">
                 <p class="muted case__label">Actions</p>
+
                 <ul class="case__list">
                   <li>BOH/FOH SOP standardization</li>
                   <li>Production planning aligned to sales volume</li>
@@ -474,6 +538,7 @@
 
               <div class="case__block">
                 <p class="muted case__label">Outcome</p>
+
                 <p class="case__text">
                   Repeatable systems that strengthen control and improve
                   consistency across shifts.
@@ -491,10 +556,11 @@
 
           <details>
             <summary>
-              <strong
-                >Do you work with new openings or existing restaurants?</strong
-              >
+              <strong>
+                Do you work with new openings or existing restaurants?
+              </strong>
             </summary>
+
             <p class="muted">
               Both. We support new concepts from pre-opening through launch, and
               existing restaurants focused on improving profitability, systems,
@@ -503,7 +569,10 @@
           </details>
 
           <details>
-            <summary><strong>How fast can we see impact?</strong></summary>
+            <summary>
+              <strong>How fast can we see impact?</strong>
+            </summary>
+
             <p class="muted">
               Initial improvements are often visible within weeks once
               high-leverage fixes are implemented, such as menu engineering,
@@ -512,11 +581,14 @@
           </details>
 
           <details>
-            <summary><strong>Is this remote-only?</strong></summary>
+            <summary>
+              <strong>Is this remote-only?</strong>
+            </summary>
+
             <p class="muted">
-              Remote advisory is available, but on-site audits are recommended
-              when execution, training, or kitchen workflow are the main
-              challenges.
+              No. We provide on-site and remote advisory for clients within our
+              service area. On-site audits are recommended when execution,
+              training, or kitchen workflow are the main challenges.
             </p>
           </details>
 
@@ -524,6 +596,7 @@
             <summary>
               <strong>What type of restaurants do you work best with?</strong>
             </summary>
+
             <p class="muted">
               Independent restaurants, hospitality groups, and ownership teams
               that are ready to implement structure, follow systems, and hold
@@ -535,6 +608,7 @@
             <summary>
               <strong>Do you share client names or financial data?</strong>
             </summary>
+
             <p class="muted">
               No. Confidentiality is respected at all times. Case studies may be
               presented anonymously when required.
@@ -545,6 +619,7 @@
             <summary>
               <strong>How do engagements typically work?</strong>
             </summary>
+
             <p class="muted">
               Engagements usually start with an audit or diagnostic, followed by
               a clear action plan. Support can be project-based or ongoing
@@ -553,10 +628,13 @@
           </details>
 
           <details>
-            <summary><strong>Do you work outside Miami?</strong></summary>
+            <summary>
+              <strong>Do you work outside Miami?</strong>
+            </summary>
+
             <p class="muted">
-              Yes. We work on-site and remotely across the U.S. and selected
-              LATAM markets.
+              Yes. We currently serve Miami-Dade, Broward, Palm Beach, Collier,
+              and Lee counties in South and Southwest Florida.
             </p>
           </details>
         </div>
@@ -565,6 +643,7 @@
       <section class="section" aria-label="Call to action">
         <div class="container">
           <h2>Ready to talk?</h2>
+
           <p class="muted section-lead">
             If you’re planning a restaurant opening or need to improve
             performance, request a consultation. We’ll review your operation and
@@ -578,6 +657,7 @@
         <div class="container grid contact-grid">
           <div class="contact-copy">
             <h2>Contact</h2>
+
             <p class="muted contact-lead">
               Tell us what you’re building (or fixing). You’ll receive a reply
               within 1–2 business days.
@@ -586,10 +666,12 @@
             <div class="contact-meta">
               <p class="contact-email">
                 <strong>Email:</strong>
-                <a href="mailto:info@apfoodconsulting.com"
-                  >info@apfoodconsulting.com</a
-                >
+
+                <a href="mailto:info@apfoodconsulting.com">
+                  info@apfoodconsulting.com
+                </a>
               </p>
+
               <p class="muted contact-alt">Or use the form.</p>
             </div>
 
@@ -616,6 +698,7 @@
               <!-- Honeypot (anti-spam) -->
               <div class="hp-wrap" aria-hidden="true">
                 <label class="hp-label" for="company">Company</label>
+
                 <input
                   id="company"
                   type="text"
@@ -629,10 +712,11 @@
 
               <div class="form-grid">
                 <div>
-                  <label for="name"
-                    ><strong>Name</strong>
-                    <span class="muted">(required)</span></label
-                  >
+                  <label for="name">
+                    <strong>Name</strong>
+                    <span class="muted">(required)</span>
+                  </label>
+
                   <input
                     id="name"
                     name="name"
@@ -645,10 +729,11 @@
                 </div>
 
                 <div>
-                  <label for="email"
-                    ><strong>Email</strong>
-                    <span class="muted">(required)</span></label
-                  >
+                  <label for="email">
+                    <strong>Email</strong>
+                    <span class="muted">(required)</span>
+                  </label>
+
                   <input
                     id="email"
                     name="email"
@@ -663,10 +748,11 @@
                 </div>
 
                 <div>
-                  <label for="phone"
-                    ><strong>Phone</strong>
-                    <span class="muted">(optional)</span></label
-                  >
+                  <label for="phone">
+                    <strong>Phone</strong>
+                    <span class="muted">(optional)</span>
+                  </label>
+
                   <input
                     id="phone"
                     name="phone"
@@ -678,10 +764,11 @@
                 </div>
 
                 <div>
-                  <label for="language"
-                    ><strong>Preferred language</strong>
-                    <span class="muted">(optional)</span></label
-                  >
+                  <label for="language">
+                    <strong>Preferred language</strong>
+                    <span class="muted">(optional)</span>
+                  </label>
+
                   <select id="language" name="language">
                     <option value="">— Select —</option>
                     <option value="English">English</option>
@@ -690,10 +777,11 @@
                 </div>
 
                 <div>
-                  <label for="business"
-                    ><strong>Restaurant / Business</strong>
-                    <span class="muted">(optional)</span></label
-                  >
+                  <label for="business">
+                    <strong>Restaurant / Business</strong>
+                    <span class="muted">(optional)</span>
+                  </label>
+
                   <input
                     id="business"
                     name="business"
@@ -704,10 +792,27 @@
                 </div>
 
                 <div>
-                  <label for="message"
-                    ><strong>What do you need help with?</strong>
-                    <span class="muted">(required)</span></label
-                  >
+                  <label for="county">
+                    <strong>Service County</strong>
+                    <span class="muted">(required)</span>
+                  </label>
+
+                  <select id="county" name="county" required>
+                    <option value="">— Select County —</option>
+                    <option value="Miami-Dade">Miami-Dade County</option>
+                    <option value="Broward">Broward County</option>
+                    <option value="Palm Beach">Palm Beach County</option>
+                    <option value="Collier">Collier County</option>
+                    <option value="Lee">Lee County</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="message">
+                    <strong>What do you need help with?</strong>
+                    <span class="muted">(required)</span>
+                  </label>
+
                   <textarea
                     id="message"
                     name="message"
@@ -751,12 +856,15 @@
         <!-- Brand -->
         <div class="footer-col">
           <strong class="footer-brand">AP Food Consulting</strong>
+
           <p class="muted footer-text">
             Restaurant consulting focused on profitable operations.
           </p>
+
           <p class="muted footer-small">
             © <span id="year"></span> AP Food Consulting
           </p>
+
           <p class="muted footer-legal">
             Results vary by operation. Consulting services are advisory in
             nature. Information submitted through this site is used solely to
@@ -767,6 +875,7 @@
         <!-- Navigation -->
         <div class="footer-col" aria-label="Footer navigation">
           <p class="footer-title">Company</p>
+
           <ul class="footer-links">
             <li><a href="/en/#about">About</a></li>
             <li><a href="/en/#services">Services</a></li>
@@ -779,11 +888,15 @@
         <!-- Legal / Contact -->
         <div class="footer-col" aria-label="Footer legal">
           <p class="footer-title">Legal</p>
+
           <ul class="footer-links">
-            <li><a href="/en/privacy/">Privacy Policy</a></li>
+            <li>
+              <a href="/en/privacy/">Privacy Policy</a>
+            </li>
           </ul>
 
           <p class="footer-title footer-title--spaced">Social</p>
+
           <ul class="footer-links">
             <li>
               <a
@@ -797,11 +910,12 @@
           </ul>
 
           <p class="footer-title footer-title--spaced">Email</p>
+
           <ul class="footer-links">
             <li>
-              <a href="mailto:info@apfoodconsulting.com"
-                >info@apfoodconsulting.com</a
-              >
+              <a href="mailto:info@apfoodconsulting.com">
+                info@apfoodconsulting.com
+              </a>
             </li>
           </ul>
         </div>
@@ -809,14 +923,15 @@
         <!-- Location / Language -->
         <div class="footer-col" aria-label="Footer location and language">
           <p class="footer-title">Location</p>
+
           <p class="muted footer-text">
             Based in Miami<br />
-            Available in US &amp; LATAM
+            Serving South &amp; Southwest Florida
           </p>
 
-          <a href="/es/" class="btn btn-outline btn--sm footer-lang" lang="es"
-            >Español</a
-          >
+          <a href="/es/" class="btn btn-outline btn--sm footer-lang" lang="es">
+            Español
+          </a>
         </div>
       </div>
     </footer>

@@ -60,15 +60,29 @@
 
   nav.addEventListener("click", function (e) {
     var t = e.target;
-    if (t && t.tagName === "A" && header.classList.contains("nav-open")) setOpen(false);
+
+    if (
+      t &&
+      t.tagName === "A" &&
+      header.classList.contains("nav-open")
+    ) {
+      setOpen(false);
+    }
   });
 
   window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && header.classList.contains("nav-open")) setOpen(false);
+    if (e.key === "Escape" && header.classList.contains("nav-open")) {
+      setOpen(false);
+    }
   });
 
   window.addEventListener("resize", function () {
-    if (window.innerWidth > 980 && header.classList.contains("nav-open")) setOpen(false);
+    if (
+      window.innerWidth > 980 &&
+      header.classList.contains("nav-open")
+    ) {
+      setOpen(false);
+    }
   });
 })();
 
@@ -99,7 +113,10 @@
 
 /* Hero: swap desktop/mobile sources */
 (function () {
-  var heroImgs = Array.prototype.slice.call(document.querySelectorAll(".hero-img"));
+  var heroImgs = Array.prototype.slice.call(
+    document.querySelectorAll(".hero-img")
+  );
+
   if (!heroImgs.length) return;
 
   var mq = window.matchMedia("(max-width: 980px)");
@@ -111,15 +128,23 @@
       var desktop = img.getAttribute("data-desktop");
       var mobile = img.getAttribute("data-mobile");
 
-      var desired = isMobile ? (mobile || desktop) : (desktop || img.getAttribute("src"));
+      var desired = isMobile
+        ? mobile || desktop
+        : desktop || img.getAttribute("src");
+
       if (!desired) return;
 
-      if (img.getAttribute("src") !== desired) img.setAttribute("src", desired);
+      if (img.getAttribute("src") !== desired) {
+        img.setAttribute("src", desired);
+      }
     });
   }
 
-  if (mq.addEventListener) mq.addEventListener("change", applySources);
-  else mq.addListener(applySources);
+  if (mq.addEventListener) {
+    mq.addEventListener("change", applySources);
+  } else {
+    mq.addListener(applySources);
+  }
 
   applySources();
 })();
@@ -127,12 +152,16 @@
 /* Hero slideshow */
 (function () {
   var hero = document.querySelector(".hero-full");
-  var images = Array.prototype.slice.call(document.querySelectorAll(".hero-img"));
+  var images = Array.prototype.slice.call(
+    document.querySelectorAll(".hero-img")
+  );
+
   if (!hero || images.length <= 1) return;
 
   var prefersReduced =
     window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   if (prefersReduced) return;
 
   var index = 0;
@@ -141,6 +170,7 @@
 
   function preload(src) {
     if (!src) return;
+
     var img = new Image();
     img.decoding = "async";
     img.src = src;
@@ -152,9 +182,13 @@
 
   function ensureInitialState() {
     images.forEach(function (img, i) {
-      if (i === 0) img.classList.add("active");
-      else img.classList.remove("active");
+      if (i === 0) {
+        img.classList.add("active");
+      } else {
+        img.classList.remove("active");
+      }
     });
+
     index = 0;
     preload(getSrc(images[1]));
   }
@@ -179,6 +213,7 @@
 
   function stop() {
     if (!timerId) return;
+
     window.clearInterval(timerId);
     timerId = null;
   }
@@ -189,12 +224,18 @@
     var io = new IntersectionObserver(
       function (entries) {
         var entry = entries[0];
+
         if (!entry) return;
-        if (entry.isIntersecting) start();
-        else stop();
+
+        if (entry.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
       },
       { threshold: 0.12 }
     );
+
     io.observe(hero);
   } else {
     start();
@@ -212,17 +253,21 @@
   function getLocale() {
     var hidden = form.querySelector('input[name="locale"]');
     var v = hidden ? String(hidden.value || "").toLowerCase() : "";
+
     if (v === "es" || v === "en") return v;
 
     var lang = (document.documentElement.lang || "").toLowerCase();
+
     if (lang.startsWith("es")) return "es";
     if (lang.startsWith("en")) return "en";
 
     if (window.location.pathname.startsWith("/es/")) return "es";
+
     return "en";
   }
 
   var locale = getLocale();
+
   var t = {
     en: {
       sending: "Sending…",
@@ -231,103 +276,198 @@
       timeout: "Request timed out. Please try again.",
       rateLimit: "Too many attempts. Please wait an hour and try again.",
       turnstile: "Please complete the security check and try again.",
-      invalid: "Please check required fields (name, email, and message).",
+      invalid:
+        "Please check the required fields (name, email, county, and message).",
       invalidEmail: "Email doesn't look valid.",
-      fallbackEmail: "Something went wrong. Please email info@apfoodconsulting.com.",
+      outsideArea:
+        "We currently don't provide service in the selected area.",
+      fallbackEmail:
+        "Something went wrong. Please email info@apfoodconsulting.com.",
     },
+
     es: {
       sending: "Enviando…",
       sent: "Listo. Mensaje enviado. Te responderemos en 1–2 días laborables.",
       network: "Error de red. Revisa tu conexión e intenta de nuevo.",
       timeout: "La solicitud tardó demasiado. Intenta de nuevo.",
-      rateLimit: "Demasiados intentos. Espera una hora e inténtalo de nuevo.",
-      turnstile: "Completa la verificación de seguridad e inténtalo otra vez.",
-      invalid: "Revisa los campos requeridos (nombre, email y mensaje).",
+      rateLimit:
+        "Demasiados intentos. Espera una hora e inténtalo de nuevo.",
+      turnstile:
+        "Completa la verificación de seguridad e inténtalo otra vez.",
+      invalid:
+        "Revisa los campos requeridos (nombre, email, condado y mensaje).",
       invalidEmail: "El email no parece válido.",
-      fallbackEmail: "Ocurrió un error. Escríbenos a info@apfoodconsulting.com.",
+      outsideArea:
+        "Actualmente no ofrecemos servicios en el área seleccionada.",
+      fallbackEmail:
+        "Ocurrió un error. Escríbenos a info@apfoodconsulting.com.",
     },
   }[locale];
 
   function setStatus(message, kind) {
     if (!statusEl) return;
+
     statusEl.textContent = message || "";
     statusEl.classList.remove("is-success", "is-error");
-    if (kind === "success") statusEl.classList.add("is-success");
-    if (kind === "error") statusEl.classList.add("is-error");
+
+    if (kind === "success") {
+      statusEl.classList.add("is-success");
+    }
+
+    if (kind === "error") {
+      statusEl.classList.add("is-error");
+    }
   }
 
   function setLoading(loading) {
     if (!submitBtn) return;
+
     submitBtn.disabled = !!loading;
+
     submitBtn.dataset.originalText =
       submitBtn.dataset.originalText || submitBtn.textContent;
-    submitBtn.textContent = loading ? t.sending : submitBtn.dataset.originalText;
+
+    submitBtn.textContent = loading
+      ? t.sending
+      : submitBtn.dataset.originalText;
   }
 
   function isValidEmail(email) {
     var v = String(email || "").trim();
+
     if (!v) return false;
     if (v.length > 254) return false;
+
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   }
 
   function clampLen(v, max) {
     v = String(v || "");
-    return v.length <= max ? v : v.slice(0, max);
+
+    return v.length <= max
+      ? v
+      : v.slice(0, max);
   }
 
   function resetTurnstileIfPresent() {
-    if (window.turnstile && typeof window.turnstile.reset === "function") {
-      try { window.turnstile.reset(); } catch (_) {}
+    if (
+      window.turnstile &&
+      typeof window.turnstile.reset === "function"
+    ) {
+      try {
+        window.turnstile.reset();
+      } catch (_) {}
     }
   }
 
   function markInvalid(el, isBad) {
     if (!el) return;
-    if (isBad) el.setAttribute("aria-invalid", "true");
-    else el.removeAttribute("aria-invalid");
+
+    if (isBad) {
+      el.setAttribute("aria-invalid", "true");
+    } else {
+      el.removeAttribute("aria-invalid");
+    }
   }
 
   var inFlight = false;
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+
     if (inFlight) return;
 
     setStatus("", null);
 
     var nameEl = form.querySelector('input[name="name"]');
     var emailEl = form.querySelector('input[name="email"]');
+    var countyEl = form.querySelector('select[name="county"]');
     var messageEl = form.querySelector('textarea[name="message"]');
 
-    var name = nameEl ? String(nameEl.value || "").trim() : "";
-    var email = emailEl ? String(emailEl.value || "").trim() : "";
-    var message = messageEl ? String(messageEl.value || "").trim() : "";
+    var name = nameEl
+      ? String(nameEl.value || "").trim()
+      : "";
+
+    var email = emailEl
+      ? String(emailEl.value || "").trim()
+      : "";
+
+    var county = countyEl
+      ? String(countyEl.value || "").trim()
+      : "";
+
+    var message = messageEl
+      ? String(messageEl.value || "").trim()
+      : "";
 
     markInvalid(nameEl, false);
     markInvalid(emailEl, false);
+    markInvalid(countyEl, false);
     markInvalid(messageEl, false);
 
     var missing = false;
-    if (!name) { markInvalid(nameEl, true); missing = true; }
-    if (!email) { markInvalid(emailEl, true); missing = true; }
-    if (!message) { markInvalid(messageEl, true); missing = true; }
+    var firstInvalid = null;
+
+    if (!name) {
+      markInvalid(nameEl, true);
+      missing = true;
+
+      if (!firstInvalid) {
+        firstInvalid = nameEl;
+      }
+    }
+
+    if (!email) {
+      markInvalid(emailEl, true);
+      missing = true;
+
+      if (!firstInvalid) {
+        firstInvalid = emailEl;
+      }
+    }
+
+    if (!county) {
+      markInvalid(countyEl, true);
+      missing = true;
+
+      if (!firstInvalid) {
+        firstInvalid = countyEl;
+      }
+    }
+
+    if (!message) {
+      markInvalid(messageEl, true);
+      missing = true;
+
+      if (!firstInvalid) {
+        firstInvalid = messageEl;
+      }
+    }
 
     if (missing) {
       setStatus(t.invalid, "error");
-      (nameEl || emailEl || messageEl || form).focus();
+
+      if (firstInvalid && typeof firstInvalid.focus === "function") {
+        firstInvalid.focus();
+      }
+
       return;
     }
 
     if (!isValidEmail(email)) {
       markInvalid(emailEl, true);
       setStatus(t.invalidEmail, "error");
-      emailEl && emailEl.focus();
+
+      if (emailEl) {
+        emailEl.focus();
+      }
+
       return;
     }
 
     // Honeypot
     var hp = form.querySelector('input[name="company"]');
+
     if (hp && String(hp.value || "").trim()) {
       form.reset();
       setStatus(t.sent, "success");
@@ -336,7 +476,10 @@
     }
 
     // Turnstile token (IMPORTANT: can be textarea, not input)
-    var tsEl = form.querySelector('[name="cf-turnstile-response"]');
+    var tsEl = form.querySelector(
+      '[name="cf-turnstile-response"]'
+    );
+
     var ts = tsEl ? tsEl.value : "";
     ts = String(ts || "").trim();
 
@@ -346,32 +489,55 @@
     }
 
     // Clamp lengths client-side
-    if (nameEl) nameEl.value = clampLen(nameEl.value, 80);
-    if (emailEl) emailEl.value = clampLen(emailEl.value, 120);
-    if (messageEl) messageEl.value = clampLen(messageEl.value, 1200);
+    if (nameEl) {
+      nameEl.value = clampLen(nameEl.value, 80);
+    }
+
+    if (emailEl) {
+      emailEl.value = clampLen(emailEl.value, 120);
+    }
+
+    if (messageEl) {
+      messageEl.value = clampLen(messageEl.value, 1200);
+    }
 
     inFlight = true;
     setLoading(true);
 
     var controller = new AbortController();
+
     var timeoutId = window.setTimeout(function () {
-      try { controller.abort(); } catch (_) {}
+      try {
+        controller.abort();
+      } catch (_) {}
     }, 15000);
 
     (async function () {
       try {
         var formData = new FormData(form);
 
-        var res = await fetch(form.getAttribute("action") || "/api/contact", {
-          method: "POST",
-          body: formData,
-          headers: { Accept: "application/json" },
-          signal: controller.signal,
-        });
+        var res = await fetch(
+          form.getAttribute("action") || "/api/contact",
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json",
+            },
+            signal: controller.signal,
+          }
+        );
 
         var raw = await res.text();
         var data = {};
-        try { data = raw ? JSON.parse(raw) : {}; } catch (_) { data = {}; }
+
+        try {
+          data = raw
+            ? JSON.parse(raw)
+            : {};
+        } catch (_) {
+          data = {};
+        }
 
         if (res.ok && data && data.ok) {
           setStatus(t.sent, "success");
@@ -380,7 +546,10 @@
           return;
         }
 
-        if (res.status === 429 || data.code === "RATE_LIMIT") {
+        if (
+          res.status === 429 ||
+          data.code === "RATE_LIMIT"
+        ) {
           setStatus(t.rateLimit, "error");
           return;
         }
@@ -402,15 +571,40 @@
         }
 
         if (data.code === "INVALID_EMAIL") {
+          markInvalid(emailEl, true);
           setStatus(t.invalidEmail, "error");
+
+          if (emailEl) {
+            emailEl.focus();
+          }
+
           return;
         }
 
-        setStatus(data.error || t.fallbackEmail, "error");
+        if (data.code === "OUTSIDE_SERVICE_AREA") {
+          markInvalid(countyEl, true);
+          setStatus(t.outsideArea, "error");
+
+          if (countyEl) {
+            countyEl.focus();
+          }
+
+          return;
+        }
+
+        setStatus(
+          data.error || t.fallbackEmail,
+          "error"
+        );
+
         resetTurnstileIfPresent();
       } catch (err) {
-        if (err && err.name === "AbortError") setStatus(t.timeout, "error");
-        else setStatus(t.network, "error");
+        if (err && err.name === "AbortError") {
+          setStatus(t.timeout, "error");
+        } else {
+          setStatus(t.network, "error");
+        }
+
         resetTurnstileIfPresent();
       } finally {
         window.clearTimeout(timeoutId);
